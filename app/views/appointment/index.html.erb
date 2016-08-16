@@ -89,7 +89,7 @@
               url: "/appointment/nuevoCliente",
               contentType: "application/json",
               dataType: "json",
-              data: JSON.stringify({  client: { nombreClt: nombre, apaternoClt: apaterno, amaternoClt: amaterno, emailClt: email, direccion: direccion, telefonoClt: telefono }}),
+              data: JSON.stringify({  client: { nombreclt: nombre, apaternoclt: apaterno, amaternoclt: amaterno, emailclt: email, direccion: direccion, telefonoclt: telefono }}),
               success: function(resp){
                   numCliente = resp.id;
 
@@ -98,7 +98,7 @@
                       url: "/appointment/nuevaCita",
                       contentType: "application/json",
                       dataType: "json",
-                      data: JSON.stringify({  appointment: { numpersonas: numPersona, fecha: fecha, hora:hora, comentario: comentario, client_id:numCliente, user_id: abogado, case_type_id: tipoCita, tipoCita: tipoCliente }}),
+                      data: JSON.stringify({  appointment: { numpersonas: numPersona, fecha: fecha, hora:hora, comentario: comentario, client_id:numCliente, user_id: abogado, case_type_id: tipoCita, tipocita: tipoCliente }}),
                       success: function(resp){
                           if(resp == 1)
                               alert("Aviso: Ya existe una cita en la fecha y hora seleccionadas para el usuario.")
