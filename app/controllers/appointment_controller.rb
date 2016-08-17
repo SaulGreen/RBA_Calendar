@@ -87,7 +87,7 @@ class AppointmentController < ApplicationController
 
                   Apps.notify_lawyer(lawyer, client, fechaStr, horaStr).deliver_later!
 
-                  if client.emailClt != nil
+                  if client.emailclt != nil
                       Apps.notify_client(lawyer, client, fechaStr, horaStr).deliver_later!
                   else
 
