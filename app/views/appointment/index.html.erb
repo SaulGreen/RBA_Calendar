@@ -241,7 +241,7 @@
                           $(resp).each(function(i,e){
                               var hora = moment(e.hora).format("HH:mm:ss");
                               var fecha = moment(e.fecha).format("YYYY-MM-DD");
-                              var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + fecha + "' data-h='" + hora + "'><h3 class='cFullName'>" + e.nombreClt + " " + e.apaternoClt + "</h3><p class='cCaseType'>" + e.emailClt + "</p><p class='cTel'>" + e.telefonoClt + "</p><p hidden class='cEmail'>" + e.emailClt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
+                              var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + fecha + "' data-h='" + hora + "'><h3 class='cFullName'>" + e.nombreclt + " " + e.apaternoclt + "</h3><p class='cCaseType'>" + e.emailclt + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
 
                               $(arrayColors).each(function(idx,elem){
                                   if(elem.auxId == e.color_id)
@@ -259,7 +259,7 @@
 
                                   var appHour = $('[data-hour="' + hora + '"]');
                                   var td = $(appHour).find('[data-fecha="' + fecha + '"]');
-                                  var tablita = "<tr class='childtdcitas'><td class='tdAppLaw2' style='background-color:" + aux + "'><p class='recCltName' data-clt='" + e.id + "'>" + e.nombreClt + " " + e.apaternoClt + "</p><p class='cTypeLaw'><span class='recCltCase'>" + e.tipoCaso + "</span> - <span class='recCltLawyer' data-lyr='" + e.user_id + "'>" + FisrtNameFix(e.nombre) + " " + e.apaterno + "</span></p><p class='recCltMail' hidden>" + e.emailClt + "</p><p class='recCltTel' hidden>" + e.telefonoClt + "</p><p hidden><span class='recCltComment'>" + e.comentario + "</span><span class='recCltDate'>" + fecha + "</span><span class='recCltHour' hidden>" + hora +"</span></p><span class='recCltAttnd' hidden>" + e.attendance + "</span></td></tr>";
+                                  var tablita = "<tr class='childtdcitas'><td class='tdAppLaw2' style='background-color:" + aux + "'><p class='recCltName' data-clt='" + e.id + "'>" + e.nombreclt + " " + e.apaternoclt + "</p><p class='cTypeLaw'><span class='recCltCase'>" + e.tipocaso + "</span> - <span class='recCltLawyer' data-lyr='" + e.user_id + "'>" + FisrtNameFix(e.nombre) + " " + e.apaterno + "</span></p><p class='recCltMail' hidden>" + e.emailclt + "</p><p class='recCltTel' hidden>" + e.telefonoclt + "</p><p hidden><span class='recCltComment'>" + e.comentario + "</span><span class='recCltDate'>" + fecha + "</span><span class='recCltHour' hidden>" + hora +"</span></p><span class='recCltAttnd' hidden>" + e.attendance + "</span></td></tr>";
                                   $(td).find(".tbdAddApp").append(tablita);
 
                               }
