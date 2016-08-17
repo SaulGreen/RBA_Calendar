@@ -174,7 +174,7 @@
                               $(resp).each(function(i,e){
                                   var hora = moment(e.hora).format("HH:mm:ss");
                                   var fecha = moment(e.fecha).format("YYYY-MM-DD");
-                                  var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + fecha + "' data-h='" + hora + "'><h3 class='cFullName'>" + e.nombreClt + " " + e.apaternoClt + "</h3><p class='cCaseType'>" + e.emailClt + "</p><p class='cTel'>" + e.telefonoClt + "</p><p hidden class='cEmail'>" + e.emailClt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><p hidden class='cLawyer'>" + e.nombre + " " + e.apaterno + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
+                                  var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + fecha + "' data-h='" + hora + "'><h3 class='cFullName'>" + e.nombreclt + " " + e.apaternoclt + "</h3><p class='cCaseType'>" + e.emailclt + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><p hidden class='cLawyer'>" + e.nombre + " " + e.apaterno + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
 
                                   console.log(e)
 
