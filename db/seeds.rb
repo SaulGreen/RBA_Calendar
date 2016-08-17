@@ -63,7 +63,7 @@
 	# 	CaseType.create(:tipoCaso => case_types[i + 1])
 	# end
 
-	acciones = ["Registro usuario","Activo usuario","Desactivo usuario","Creo cita","Modifico cita","Cancelo cita","Confirmo cita"
+	acciones = ["Registro usuario","Activo usuario","Desactivo usuario","Creo cita","Modifico cita","Cancelo cita","Confirmo cita",
 				"Confirmo asistencia","Inicio sesion","Cerro sesion","Modifico perfil de cliente"]
 
 	for i in 0..acciones.size
