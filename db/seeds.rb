@@ -66,6 +66,6 @@
 	acciones = ["Registro usuario","Activo usuario","Desactivo usuario","Creo cita","Modifico cita","Cancelo cita","Confirmo cita"
 				"Confirmo asistencia","Inicio sesion","Cerro sesion","Modifico perfil de cliente"]
 
-	acciones.each do |accion|
-		Action.create(:accion => accion)
+	for i in 0..acciones.size
+		Action.create(:accion => acciones[i + 1])
 	end
