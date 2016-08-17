@@ -128,7 +128,7 @@ class AppointmentController < ApplicationController
       @remote_ip = request.remote_ip#request.env["HTTP_X_FORWARDED_FOR"]
       
       descripcion = Action.find(action)
-      @log = History.new(:user_id => user.id,:action_id => 6,:fechaLog => Time.now,:client_id => client.id,:detalles => descripcion.accion + " para " + lawyer.nombre + " " + lawyer.apaterno + " con " + client.nombreclt + " " + client.apaternoclt + " para el dia " + fecha + " a las " + hora + ".",:ubicacion => @remote_ip)
+      @log = History.new(:user_id => user.id,:action_id => 6,:fechalog => Time.now,:client_id => client.id,:detalles => descripcion.accion + " para " + lawyer.nombre + " " + lawyer.apaterno + " con " + client.nombreclt + " " + client.apaternoclt + " para el dia " + fecha + " a las " + hora + ".",:ubicacion => @remote_ip)
       @log.save
   end
 
