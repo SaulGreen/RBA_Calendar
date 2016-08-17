@@ -67,5 +67,5 @@
 				"Confirmo asistencia","Inicio sesion","Cerro sesion","Modifico perfil de cliente"]
 
 	for i in 0..acciones.size
-		Action.create(:accion => acciones[i + 1])
+		Action.create(:accion => acciones[i])
 	end
