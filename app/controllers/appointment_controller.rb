@@ -66,7 +66,9 @@ class AppointmentController < ApplicationController
       @appCheck = Appointment.where("fecha = ? AND hora = ? AND user_id = ? AND status_app = 1", fecha, hora, user).count
 
       if @appCheck > 0
-          Client.where(:id => :client_id).destroy
+          @clientDst = Client.where(:id => :client_id)
+          @clientDst.destroy
+          
           respond_to do |format|
                format.json { render :text => @appCheck }
               #format.json { render :text => "Ya existe una cita activa para esa fecha y en ese horario", status: :created, head: :ok }
