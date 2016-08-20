@@ -53,7 +53,7 @@
       var daysPerMonth = [ 0, 31, totalFeb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
       weekCalendar(trDays, daysPerMonth);
-      WeeklyAppointments(currentMonth, year, false);
+      WeeklyAppointments(currentMonth, year, true);
       getWeekAppointments(fstDay,lstDay);
       CheckVacationsPeriod (usrRol,$(".tdDayApp"))
 
@@ -112,7 +112,7 @@
                               $("#textarea").val("");
 
                               //FIX PARA RECARGA AL SALVAR LAS CITAS
-                              WeeklyAppointments(currentMonth,year, false);
+                              WeeklyAppointments(currentMonth,year, true);
                               getWeekAppointments();
                           }
                           
@@ -323,7 +323,8 @@
           var app = editCita.find(".appInfo-edit").attr("data-app");
 
           var originalDate = editCita.find(".nwDate").val();
-          var newDate = moment(originalDate).subtract(1,'months').format("YYYY-MM-DD");
+          //var newDate = moment(originalDate).subtract(1,'months').format("YYYY-MM-DD");
+          var newDate = moment(originalDate).format("YYYY-MM-DD");
           var newHour = moment("2000-01-01 " + editCita.find("#slctHour-Edit").val()).format("YYYY-MM-DD HH:mm:ss");
           var newLayer = editCita.find("#slctEmp-Edit").val();
           var data = { id: app, fecha: newDate, hora: newHour, user_id: newLayer }
@@ -337,7 +338,7 @@
                   data: JSON.stringify(data),
                   success: function(resp){
 
-                      WeeklyAppointments(currentMonth,year,false);
+                      WeeklyAppointments(currentMonth,year,true);
                       getWeekAppointments();
 
                       editCita.fadeOut(500);
@@ -370,7 +371,7 @@
                   dataType: "json",
                   data: JSON.stringify(data),
                   success: function(resp){
-                      WeeklyAppointments(currentMonth,year,false);
+                      WeeklyAppointments(currentMonth,year,true);
                       getWeekAppointments();
                   }, error: function(xhr,status,error){
                      console.log(xhr);
@@ -437,7 +438,7 @@
 
           var day = parseInt(fstDay.substr(8,2));
 
-          WeeklyAppointments(currentMonth, year, true);
+          WeeklyAppointments(currentMonth, year, false);
           getWeekAppointments();
           CheckVacationsPeriod (usrRol,$(".tdDayApp"))
 
@@ -482,10 +483,12 @@
           });
 
           var day = parseInt(lstDay.substr(8,2));
-          if(day ==  daysThisMonth)
+          var wkSwtch = false  
+          if(day ==  daysThisMonth){
               currentMonth = currentMonth + 1;
+          }
 
-          WeeklyAppointments(currentMonth, year,true);
+          WeeklyAppointments(currentMonth, year, true);
           getWeekAppointments();
           CheckVacationsPeriod (usrRol,$(".tdDayApp"))
 
@@ -536,7 +539,7 @@
 
               for(var i = 0; i < dsPst.length; i ++){
                   if(parseInt(dsPst[i]) > today){
-                      currentMonth = currentMonth - 1;
+                      //currentMonth = currentMonth - 1;
                       crtMnt = true;
                       break;
                   }
