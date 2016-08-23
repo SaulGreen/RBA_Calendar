@@ -679,8 +679,8 @@
               success: function(resp){
                   var start, end;
                   $(resp).each(function(i,e){
-                      start = e.startDate;
-                      end = e.endDate;
+                      start = e.startdate;
+                      end = e.enddate;
                   })
 
                   //console.log(start + " " + end)
@@ -698,7 +698,8 @@
 
                   } 
               }, error: function(xhr,status,error){
-
+                    console.log(xhr);
+                    alert(error);
               }
           })
       }
