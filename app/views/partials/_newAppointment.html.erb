@@ -298,6 +298,29 @@
 
     $("#slctAbogado").on("change", function(){
         var sltdLyr = $("#slctAbogado option:selected").val()
+        var usrName = $("#slctAbogado option:selected").text();
+        //var fecha = 
+        var data = { user: sltdLyr, fecha: fechaCita, hora: horaCita }
+        alert(horaCita)
+        $.ajax({
+            type: "POST",
+            url: "/appointment/CheckAnnouncement",
+            dataType: "json",
+            contentType: "application/json; charset-utf8",
+            data: JSON.stringify(data),
+            success: function(resp){
+                console.log(resp)
+                if(resp != null){
+                    alert("El usuario " + usrName + " no estara disponible a la fecha y hora seleccionada.");
+                    $("#slctAbogado").prop("selectedIndex",0);
+                }else{
+
+                }
+            }, error: function(xhr, status, error){
+                console.log(xhr);
+                alert(error)
+            }
+        })
         
     });
 
@@ -327,6 +350,8 @@
                     opt += "<option value='" + e.id + "''>" + e.nombre + " " + e.apaterno + "</option>";
                 });
                 $("#slctAbogado").append(opt);
+                $("#slctAbogado").prepend("<option>Seleccione...</option>");
+                $("#slctAbogado").prop("selectedIndex",0);
             }, error: function(xhr,status,error){
                 console.log(xhr);
                 alert(error);

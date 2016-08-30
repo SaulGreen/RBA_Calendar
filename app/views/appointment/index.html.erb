@@ -670,13 +670,36 @@
               $(row).append(thDays[i]);                                    
       }
 
+      function CheckAnnouncements(){
+        $.ajax({
+            url: "",
+            type: "get",
+            dataType: "json",
+            contentType: "application/json; charset-utf8",
+            success: function(resp){
+                
+            }, error: function(xhr,status,error){
+                console.log(xhr);
+                alert(error)
+            }
+        });
+      }
+
       function CheckVacationsPeriod (rol,tdDayApp) {
+
+              
+          var strtDay = $(".cita_1").children(":nth-child(1)").data("fecha")
+          var lstDay = $(".cita_1").children(":nth-child(7)").data("fecha")
+          var data = { fd: moment(strtDay).format("YYYY-MM-DD"), ld: moment(lstDay).format("YYYY-MM-DD") };
+
           $.ajax({
               url: "/appointment/GetVacationPeriod",
-              type: "GET",
+              type: "POST",
               dataType: "json",
               contentType: "application/json; charset-utf8",
+              data:JSON.stringify(data),
               success: function(resp){
+
                   var start, end;
                   $(resp).each(function(i,e){
                       start = e.startdate;
@@ -694,8 +717,6 @@
                           }
                               //console.log("dia normal: " + tmpFecha + ". Dia vacional inicial: " + start)
                       });
-                  }else{
-
                   } 
               }, error: function(xhr,status,error){
                     console.log(xhr);

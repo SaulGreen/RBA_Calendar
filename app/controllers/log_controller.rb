@@ -81,8 +81,6 @@ class LogController < ApplicationController
 			@assingCheck = Assignment.where(:user_id => user, :case_type_id => params[:task]).count
 			CountAnsSave(@assingCheck,user)
 		end
-
-		
 	end
 
 	def CountAnsSave(count,user)
@@ -135,6 +133,25 @@ class LogController < ApplicationController
 		@users = User.all
 		respond_to do |format|
 			format.json { render :text => @users.to_json }
+		end
+	end
+
+	def SetAnnouncement
+		horaOut = params[:horainicio]
+		horaIn = params[:horafinal]
+		# horaOut = horaOut.strftime('%r')
+		# horaIn = horaIn.strftime('%r')
+
+		@announce = Announcement.create(:titulo => params[:titulo], :fecha => params[:fecha], :comentario => params[:comentario], :horainicio => horaOut, :horafinal => horaIn, :id_user => current_user.id)
+
+		if @announce.save
+			respond_to do |format|
+				format.json { render :text => @announce.to_json }
+			end
+		else
+			respond_to do |format|
+				format.json { render json: @announce.errors, status: :unprocesable_entity }
+			end
 		end
 	end
 

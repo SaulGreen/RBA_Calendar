@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get 'monthly/index'
   get 'appointment/index'
   get 'day/index'
-  get "appointment/GetVacationPeriod"
+  post "appointment/GetVacationPeriod"
   post 'day/GetAppointments'
   post 'appointment/nuevaCita'
   post 'appointment/nuevoCliente'
@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   post 'appointment/searchCustomer'
   post 'appointment/Attendance'
   post "appointment/GetAssistantAppointments"
+  post "appointment/CheckAnnouncement"
 
   post "log/GetFullLog"
   get "log/GetLogActions"
@@ -33,6 +34,7 @@ Rails.application.routes.draw do
   post "log/TaskRemove"
   post "log/GetUsersByStatus"
   post "log/GetUserInformation"
+  post "log/SetAnnouncement"
 
   #Temp
   get "log/colorList"

@@ -1,6 +1,119 @@
 <%= render "partials/mainNav" %>
 <%= render "partials/dashboardMenu"%>
 
+<div id="divAvi" class="dshBox divVar" >
+	<h3>Avisos y dias festivos</h3>
+	<hr style="border-top: 1px solid #ccc;">
+	<div id="divAdv">
+        <h4>Aviso de ausencia</h4>
+		<label for="">Titulo:</label><input style="margin-left:0px;width:300px;height:30px;" class="" type="text" id="txtTitle">
+		<label for="">Fecha:</label><input type="date" id="dtAviso">
+		<label for="">Salida:</label>
+		<select id="slctOtAd">
+			<option value="10:30:00">10:30</option>
+			<option value="11:00:00">11:00</option>
+			<option value="11:30:00">11:30</option>
+			<option value="12:00:00">12:00</option>
+			<option value="12:30:00">12:30</option>
+			<option value="13:00:00">13:00</option>
+			<option value="13:30:00">13:30</option>
+			<option value="14:00:00">14:00</option>
+			<option value="14:30:00">14:30</option>
+			<option value="15:00:00">15:00</option>
+			<option value="15:30:00">15:30</option>
+			<option value="16:00:00">16:00</option>
+			<option value="16:30:00">16:30</option>
+			<option value="17:00:00">17:00</option>
+			<option value="17:30:00">17:30</option>
+			<option value="18:00:00">18:00</option>
+			<option value="18:30:00">18:30</option>
+		</select>
+		<label for="">Regreso:</label>
+		<select id="slctInAd">
+			<option value="10:30:00">10:30</option>
+			<option value="11:00:00">11:00</option>
+			<option value="11:30:00">11:30</option>
+			<option value="12:00:00">12:00</option>
+			<option value="12:30:00">12:30</option>
+			<option value="13:00:00">13:00</option>
+			<option value="13:30:00">13:30</option>
+			<option value="14:00:00">14:00</option>
+			<option value="14:30:00">14:30</option>
+			<option value="15:00:00">15:00</option>
+			<option value="15:30:00">15:30</option>
+			<option value="16:00:00">16:00</option>
+			<option value="16:30:00">16:30</option>
+			<option value="17:00:00">17:00</option>
+			<option value="17:30:00">17:30</option>
+			<option value="18:00:00">18:00</option>
+			<option value="18:30:00">18:30</option>
+		</select>
+		<label for="chkAll">Todo el dia </label><input type="checkbox" id="chkAll">
+		<br>
+		<label for="">Descripcion:</label><textarea name="" id="txtCmnt" cols="10" rows="10" class="form-control" style="height:50px; width:100%;"></textarea>
+		<br>
+		<input type="button" class="btn btn-info btn-sm pull-right" id="btnAdv" value="Guardar en calendario">
+		<br>
+		<hr style="border-top: 1px solid #ccc;">
+		<h4>Crear reunion</h4>
+		<label for="">Fecha:</label><input type="date" id="dtMeet">
+		<label for="">Hora de inicio:</label>
+		<select id="slctInHr">
+			<option value="10:30:00">10:30</option>
+			<option value="11:00:00">11:00</option>
+			<option value="11:30:00">11:30</option>
+			<option value="12:00:00">12:00</option>
+			<option value="12:30:00">12:30</option>
+			<option value="13:00:00">13:00</option>
+			<option value="13:30:00">13:30</option>
+			<option value="14:00:00">14:00</option>
+			<option value="14:30:00">14:30</option>
+			<option value="15:00:00">15:00</option>
+			<option value="15:30:00">15:30</option>
+			<option value="16:00:00">16:00</option>
+			<option value="16:30:00">16:30</option>
+			<option value="17:00:00">17:00</option>
+			<option value="17:30:00">17:30</option>
+			<option value="18:00:00">18:00</option>
+			<option value="18:30:00">18:30</option>
+		</select>
+		<label for="">Hora de finalizacion:</label>
+		<select id="slctOtHr">
+			<option value="10:30:00">10:30</option>
+			<option value="11:00:00">11:00</option>
+			<option value="11:30:00">11:30</option>
+			<option value="12:00:00">12:00</option>
+			<option value="12:30:00">12:30</option>
+			<option value="13:00:00">13:00</option>
+			<option value="13:30:00">13:30</option>
+			<option value="14:00:00">14:00</option>
+			<option value="14:30:00">14:30</option>
+			<option value="15:00:00">15:00</option>
+			<option value="15:30:00">15:30</option>
+			<option value="16:00:00">16:00</option>
+			<option value="16:30:00">16:30</option>
+			<option value="17:00:00">17:00</option>
+			<option value="17:30:00">17:30</option>
+			<option value="18:00:00">18:00</option>
+			<option value="18:30:00">18:30</option>
+		</select>
+		<label for="">Involucrados</label>
+		<select id="slctOpt">
+			<option value="1">Todos</option>
+			<option value="2">Ver personal</option>
+		</select>
+		<table class="table table-bordered">
+			<thead>
+				<th>Nombre</th>
+				<th>Requerir</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<input type="button" class="btn btn-sm btn-info pull-right" value="Enviar aviso">
+	</div>
+</div>
+
 <div id="divUsrs" class="dshBox divVar" hidden>
 	<h3>Usuarios del sistema</h3>
 	<hr style="border-top: 1px solid #ccc;">
@@ -259,6 +372,30 @@
 
 <script type="text/javascript">
 	$(document).on("ready",function(){
+
+		$("#btnAdv").on("click", function(){
+			var title = $("#txtTitle").val();
+			var dtAviso = $("#dtAviso").val();
+			var comment = $("#txtCmnt").val();
+			var hrOut = $("#slctOtAd option:selected").val();
+			var hrIn = $("#slctInAd option:selected").val();
+
+			var data = { titulo: title, fecha: dtAviso, comentario: comment, horainicio: hrOut, horafinal: hrIn }
+
+			$.ajax({
+				type: "POST",
+				url: "/log/SetAnnouncement",
+				dataType: "json",
+				contentType: "application/json; charset-UTF8",
+				data: JSON.stringify(data),
+				success: function(resp){
+					console.log(resp)
+				},error: function(xhr,status,error){
+					console.log(xhr);
+					alert(error);
+				}
+			})
+		});
 
 		$("#dashInfo").on("click",function(){
 			$.ajax({

@@ -74,7 +74,7 @@
         }
         
 
-        var daysPerMonth = [ 31, totalFeb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        var daysPerMonth = [0, 31, totalFeb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
  
         if(weekDay != 0)
                 weekDay = weekDay - 1;
@@ -329,7 +329,7 @@
   
         function getDailyAppointments(arrayColors){
             $(".tdlargo").empty()
-            var fecha = new Date(year,currentMonth - 1, currentDay);
+            var fecha = new Date(year,currentMonth, currentDay);
             fecha = moment(fecha).subtract(1,'months').format("YYYY-MM-DD")
             fecha = { fecha: fecha}
             var myColor;

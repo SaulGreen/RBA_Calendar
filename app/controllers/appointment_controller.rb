@@ -215,8 +215,34 @@ class AppointmentController < ApplicationController
       end
   end
 
+  def CheckAnnouncement
+      hora = params[:hora]      
+      @avisos = Announcement.where("id_user = ? AND fecha = ? AND horainicio <= ? AND horafinal < ?",params[:user],params[:fecha],params[:hora].to_time,params[:hora].to_time).all
+      @vacation = Vacation.where("user_id = ? AND startdate <= ? AND enddate >= ?",params[:user],params[:fecha],params[:fecha]).all
+
+      if @avisos.size > 0 || @vacation.size > 0
+          aviso = "El usuario seleccionado no se encuentra disponible en la fecha y hora seleccinada."
+          respond_to do |format|
+              format.json { render :text => aviso.to_json }
+          end
+      else
+        aviso = nil
+          respond_to do |format|
+              format.json { render :text => @aviso.to_json }
+          end
+      end
+      
+  end
+
   def GetVacationPeriod
-      @vacations = Vacation.where(:user_id => current_user.id).select("startdate,enddate,comment").all
+      if current_user.role_id != 4
+          @vacations = Vacation.where("user_id = ? AND startdate >= ?",current_user.id,params[:fd]).all
+          #@vacations = Vacation.where(:user_id => current_user.id, :startdate >= params[:fd], :enddate <= params[:ld]).all
+      else
+          @vacations = Vacation.where("startdate >= ?",params[:fd]).all
+          #@vacations = Vacation.where(:startdate >= params[:fd], :enddate <= params[:ld]).select("startdate,enddate,comment").all
+      end
+
       respond_to do |format|
           format.json { render :text => @vacations.to_json }
       end
