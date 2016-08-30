@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  titulo: MyString
+  commentario: MyText
+  fecha: 2016-08-25
+  horainicio: 2016-08-25 16:23:54
+  horafinal: 2016-08-25 16:23:54
+  id_user: 1
+
+two:
+  titulo: MyString
+  commentario: MyText
+  fecha: 2016-08-25
+  horainicio: 2016-08-25 16:23:54
+  horafinal: 2016-08-25 16:23:54
+  id_user: 1
