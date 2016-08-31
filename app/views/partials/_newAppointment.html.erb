@@ -300,7 +300,7 @@
         var sltdLyr = $("#slctAbogado option:selected").val()
         var usrName = $("#slctAbogado option:selected").text();
         //var fecha = 
-        var data = { user: sltdLyr, fecha: fechaCita, hora: horaCita }
+        var data = { user: sltdLyr, fecha: fechaCita, hora: "2000-01-01 " + horaCita }
         alert(horaCita)
         $.ajax({
             type: "POST",
@@ -329,7 +329,7 @@
 
         var optSel = $(".typeSelected").attr("data-val")
         if(optSel == 1){
-            alert("Es cita de primera vez.");
+            //alert("Es cita de primera vez.");
             $("#slctTipoCita").prop("selectedIndex",1).prop("disabled",true);
         }
         
@@ -344,7 +344,7 @@
             data: JSON.stringify(data),
             success: function(resp){
                 $("#slctAbogado").empty();
-                console.log(resp)
+                //console.log(resp)
                 var opt = "";
                 $(resp).each(function(i,e){
                     opt += "<option value='" + e.id + "''>" + e.nombre + " " + e.apaterno + "</option>";

@@ -217,7 +217,7 @@ class AppointmentController < ApplicationController
 
   def CheckAnnouncement
       hora = params[:hora]      
-      @avisos = Announcement.where("id_user = ? AND fecha = ? AND horainicio <= ? AND horafinal < ?",params[:user],params[:fecha],params[:hora].to_time,params[:hora].to_time).all
+      @avisos = Announcement.where("id_user = ? AND fecha = ? AND horainicio <= ? AND horafinal > ?",params[:user],params[:fecha],params[:hora].to_time,params[:hora].to_time).all
       @vacation = Vacation.where("user_id = ? AND startdate <= ? AND enddate >= ?",params[:user],params[:fecha],params[:fecha]).all
 
       if @avisos.size > 0 || @vacation.size > 0
