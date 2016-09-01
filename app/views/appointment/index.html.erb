@@ -528,6 +528,11 @@
               dayNumbers[i] = $(e).text();
           });
 
+          
+
+          if(dayNumbers[0] > dayNumbers[6])
+            wkSwtch = false
+
           if(wkSwtch == false){
               var dsPst = [], dsNew = [], crtMnt;;
               for(var i = 0; i < dayNumbers.length; i++){
@@ -539,7 +544,7 @@
 
               for(var i = 0; i < dsPst.length; i ++){
                   if(parseInt(dsPst[i]) > today){
-                      //currentMonth = currentMonth - 1;
+                      currentMonth = currentMonth - 1;
                       crtMnt = true;
                       break;
                   }

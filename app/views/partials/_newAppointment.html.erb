@@ -299,9 +299,9 @@
     $("#slctAbogado").on("change", function(){
         var sltdLyr = $("#slctAbogado option:selected").val()
         var usrName = $("#slctAbogado option:selected").text();
-        //var fecha = 
+
         var data = { user: sltdLyr, fecha: fechaCita, hora: "2000-01-01 " + horaCita }
-        alert(horaCita)
+        //alert(horaCita)
         $.ajax({
             type: "POST",
             url: "/appointment/CheckAnnouncement",
