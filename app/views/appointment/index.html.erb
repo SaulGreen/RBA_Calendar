@@ -629,7 +629,7 @@
 
           aux = 0, flag = false;
           for(var i = 1; i < weekDay + 1; i++){
-              prevDays[i] = weekDays[i];
+              prevDays[i] = weekDays[i - 1];
               prevDates[i] = currentDay - weekDay + aux;
               auxDates = [];
               currentMonth = date.getMonth() + 1;
@@ -637,7 +637,7 @@
               if(prevDates[i] < 1){
                   //currentMonth = currentMonth - 1;
                   prevDates[i] = daysPerMonth[currentMonth - 1] - i + 1;
-                  thDays.push('<th class="nomDia">' + weekDays[i - 1] +'<a class="dayNumber" style="color:#fff;">' + OneDigitDates(prevDates[i]) + '</a></th>');
+                  thDays.push('<th class="nomDia">' + weekDays[weekDay - i] +'<a class="dayNumber" style="color:#fff;">' + OneDigitDates(prevDates[i]) + '</a></th>');
                   flag = true;
               }else{
                   if(flag == true){
