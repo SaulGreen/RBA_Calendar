@@ -29,7 +29,7 @@ class AppointmentController < ApplicationController
       user = appmnt.user_id
       lawyer = User.where(:id => user).first
 
-      LogAppointment(current_user,7,client,fechaStr,horaStr,lawyer)
+      LogAppointment(current_user,5,client,fechaStr,horaStr,lawyer)
 
       respond_to do |format|
           format.json { render :text => @appointment.to_json }
@@ -84,7 +84,7 @@ class AppointmentController < ApplicationController
                   horaStr = @appointment.hora.strftime('%r')
 
 
-                  LogAppointment(current_user,6,client,fechaStr,horaStr,lawyer)
+                  LogAppointment(current_user,4,client,fechaStr,horaStr,lawyer)
                   #@action = Action.where(:id => 6).select(:id)
                   #lawyer.nombre + " " + @action + " el dia " + fecha
 
@@ -118,7 +118,7 @@ class AppointmentController < ApplicationController
       fechaStr = @appointment.fecha.strftime('%v').to_s
       horaStr = @appointment.hora.strftime('%r')
 
-      LogAppointment(current_user,8,client,fechaStr,horaStr,lawyer)
+      LogAppointment(current_user,6,client,fechaStr,horaStr,lawyer)
 
       respond_to do |format|
           format.json { render :text => @appointment.to_json }
