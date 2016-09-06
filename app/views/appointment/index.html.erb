@@ -84,49 +84,55 @@
 
           var d = fecha + " " + hora;
 
-          $.ajax({
-              type: "POST",
-              url: "/appointment/nuevoCliente",
-              contentType: "application/json",
-              dataType: "json",
-              data: JSON.stringify({  client: { nombreclt: nombre, apaternoclt: apaterno, amaternoclt: amaterno, emailclt: email, direccion: direccion, telefonoclt: telefono }}),
-              success: function(resp){
-                  numCliente = resp.id;
+          if(tipoCita == null || tipoCita == ""){
+              alert("Debe seleccionar a que tipo de cita acude el cliente.")
+          }else{
+              $.ajax({
+                  type: "POST",
+                  url: "/appointment/nuevoCliente",
+                  contentType: "application/json",
+                  dataType: "json",
+                  data: JSON.stringify({  client: { nombreclt: nombre, apaternoclt: apaterno, amaternoclt: amaterno, emailclt: email, direccion: direccion, telefonoclt: telefono }}),
+                  success: function(resp){
+                      numCliente = resp.id;
 
-                  $.ajax({
-                      type: "POST",
-                      url: "/appointment/nuevaCita",
-                      contentType: "application/json",
-                      dataType: "json",
-                      data: JSON.stringify({  appointment: { numpersonas: numPersona, fecha: fecha, hora:hora, comentario: comentario, client_id:numCliente, user_id: abogado, case_type_id: tipoCita, tipocita: tipoCliente }}),
-                      success: function(resp){
-                          if(resp == 1)
-                              alert("Aviso: Ya existe una cita en la fecha y hora seleccionadas para el usuario.")
-                          else{
+                      $.ajax({
+                          type: "POST",
+                          url: "/appointment/nuevaCita",
+                          contentType: "application/json",
+                          dataType: "json",
+                          data: JSON.stringify({  appointment: { numpersonas: numPersona, fecha: fecha, hora:hora, comentario: comentario, client_id:numCliente, user_id: abogado, case_type_id: tipoCita, tipocita: tipoCliente }}),
+                          success: function(resp){
+                              if(resp == 1)
+                                  alert("Aviso: Ya existe una cita en la fecha y hora seleccionadas para el usuario.")
+                              else{
 
-                              var m = moment(resp.hora).format("hh:mm a");
-                              $(".testbox").css({"display":"none"});
-                              $("#slctTipoCita").prop("selectedIndex",0);
-                              $("#slctAbogado").prop("selectedIndex",0);
-                              $(".frmApp").val("");
-                              $("#textarea").val("");
+                                  var m = moment(resp.hora).format("hh:mm a");
+                                  $(".testbox").css({"display":"none"});
+                                  $("#slctTipoCita").prop("selectedIndex",0);
+                                  $("#slctAbogado").prop("selectedIndex",0);
+                                  $(".frmApp").val("");
+                                  $("#textarea").val("");
 
-                              //FIX PARA RECARGA AL SALVAR LAS CITAS
-                              WeeklyAppointments(currentMonth,year, true);
-                              getWeekAppointments();
+                                  //FIX PARA RECARGA AL SALVAR LAS CITAS
+                                  WeeklyAppointments(currentMonth,year, true);
+                                  getWeekAppointments();
+                              }
+                              
+
+                          }, error: function(xhr,status,error){
+                              console.log(xhr);
+                              alert(error);
                           }
-                          
+                      });
+                  }, error: function(xhr,status,error){
+                      console.log(xhr);
+                      alert(error);
+                  }
+              });
+          }
 
-                      }, error: function(xhr,status,error){
-                          console.log(xhr);
-                          alert(error);
-                      }
-                  });
-              }, error: function(xhr,status,error){
-                  console.log(xhr);
-                  alert(error);
-              }
-          });
+          
       });
       
       $("body").on("click", ".lstLawyer", function(){
@@ -637,7 +643,7 @@
               if(prevDates[i] < 1){
                   //currentMonth = currentMonth - 1;
                   prevDates[i] = daysPerMonth[currentMonth - 1] - i + 1;
-                  thDays.push('<th class="nomDia">' + weekDays[weekDay - i] +'<a class="dayNumber" style="color:#fff;">' + OneDigitDates(prevDates[i]) + '</a></th>');
+                  thDays.push('<th class="nomDia">' + weekDays[weekDay - a] +'<i class="dayNumber" style="color:#fff;">' + OneDigitDates(prevDates[i]) + '</a></th>');
                   flag = true;
               }else{
                   if(flag == true){
