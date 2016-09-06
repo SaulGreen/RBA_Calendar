@@ -4,12 +4,17 @@ class DayController < ApplicationController
     before_action :GetAbogadosCasos
 	
   	def index
-      @appointments = Appointment.joins(:client).joins(:user).joins(:case_type).where("status_app = 1 AND user_id = ? AND fecha = ?", current_user.id, params[:fecha]).all.select("numcaso", "client_id, tipocaso, nombre, apaterno, color_id, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance")
+      if current_user.role_id != 4
+          @appointments = Appointment.joins(:client).joins(:user).joins(:case_type).where("status_app = 1 AND user_id = ? AND fecha = ?", current_user.id, params[:fecha]).all.select("numcaso", "client_id, tipocaso, nombre, apaterno, color_id, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance")
+      else
+          @appointments = Appointment.joins(:client).joins(:user).joins(:case_type).where("status_app = 1 AND fecha = ?", params[:fecha]).all.select("numcaso", "client_id, tipocaso, nombre, apaterno, color_id, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance")
+      end
+
       #@appointments = Appointment.where(:user_id => current_user.id,:fecha => params[:fecha])
       respond_to do |format|
           format.html
           format.pdf do 
-              pdf = AppointmentPdf.new(@appointments)
+              pdf = AppointmentPdf.new(@appointments,current_user.role_id)
               send_data pdf.render, filename: "schedule.pdf", type: 'application/pdf'
           end
       end
