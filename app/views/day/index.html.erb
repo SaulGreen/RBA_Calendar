@@ -346,7 +346,7 @@
                         $(resp).each(function(i,e){
                             var cita = "<div class='dayApp'><p><b class='black'>Cliente: </b><span class='dayIdApp' hidden>" + e.id + "</span><span class='recCltName' data-clt='" + e.id + "'>" + e.nombreclt + " " + e.apaternoclt + "</span>  <b class='black'>Tipo de caso: </b><span class='recCltCase'>" + e.tipocaso + "</span></p><p><b class='black'>Comentario: </b><span class='recCltComment'> " + e.comentario + "</span><span class='recCltMail' hidden>" + e.emailclt + "</span><span class='recCltTel' hidden>" + e.telefonoclt + "</span><span class='cltlawyer' hidden>" + e.nombre + " " + e.apaterno + "</span><span class='dayNumPer' hidden>" + e.numpersonas + "</span><span class='dayColor' hidden>" + e.color_id + "</span><span class='recCltDate' hidden>" + e.fecha + "</span><span class='recCltHour' hidden>" + moment(e.hora).format("hh:mm") + "</span><span class='recCltLawyer' hidden data-lyr='" + e.user_id + "'>" + e.nombre + " " + e.apaterno + "</span></p><span class='recCltAttnd' hidden>" + e.attendance + "</span></div>"
 
-                            var time = moment(e.hora).format("hh:mm:ss")
+                            var time = moment(e.hora).format("HH:mm:ss")
                             var appHour = $('[data-hora="' + time + '"]');
                             appHour.append(cita);
                         }); 
