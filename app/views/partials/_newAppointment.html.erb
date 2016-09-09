@@ -145,22 +145,32 @@
             var email = $("#email").val();
             var tel = $("#telefono").val();
             var idCase = $("#numCase").val();
+            var opt = null;
 
-            var data = {name: name, apaterno:aPaterno, amaterno: aMaterno, email:email, telefono: tel, numCase: idCase };
+            if(idCase != "")
+                opt = 1; 
+            else if(tel != "")
+                opt = 2;
+            else if (email != "")
+                opt = 3;
+            else if(name != "" && aPaterno != "")
+                opt = 4;
 
-            $.ajax({
+            var data = {name: name, apaterno:aPaterno, email:email, telefono: tel, numCase: idCase, opt:opt };
+
+            /*$.ajax({
                 url: "/appointment/searchCustomer",
                 type: "POST",
                 contentType: "application/json; charset-utf8",
                 dataType: "json",
                 data: JSON.stringify(data),
                 success: function(resp){
-                    console.log(resp)
+                    $("#name").val(data)
                 }, error: function(xhr,status,error){
                     console.log(xhr);
                     alert(error);
                 }
-            });
+            });*/
 
         }
     });

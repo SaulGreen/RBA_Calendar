@@ -70,7 +70,7 @@
                 tipoCliente = 3;
 
           tipoCita = $("#slctTipoCita").val();
-          abogado = $("#slctAbogado").val();
+          abogado = $("#slctAbogado option:selected").val()
           nombre = $("#name").val();
           apaterno = $("#apaterno").val();
           amaterno = $("#amaterno").val();
@@ -84,8 +84,8 @@
 
           var d = fecha + " " + hora;
 
-          if(tipoCita == null || tipoCita == ""){
-              alert("Debe seleccionar a que tipo de cita acude el cliente.")
+          if(tipoCita == null || tipoCita == "" || !parseInt(abogado) || parseInt(abogado) == ""){
+              alert("Debe seleccionar a que tipo de cita acude el cliente y un asesor.")
           }else{
               $.ajax({
                   type: "POST",
@@ -218,6 +218,13 @@
           var fstDay = $(".cita_1").children(":nth-child(1)").data("fecha")
           var lstDay = $(".cita_1").children(":nth-child(7)").data("fecha")
           var data = { fecha1: fstDay, fecha2: lstDay };
+          var h = screen.height;
+          alert(h)
+          var screenOpt;
+          if (h < 1070)
+              screenOpt = 3;
+          else
+              screenOpt = 4;
 
           $.ajax({
               type: "GET",
@@ -273,9 +280,12 @@
                                       app.css({ "background-color":"#706F6F" });
                               });
 
+                              
+                              
+
                               var tdCitas = $(".tbdAddApp");
                               $(tdCitas).each(function(i,e){
-                                  if($(e).children("tr").length > 4){
+                                  if($(e).children("tr").length > screenOpt){
                                       var trChild = $(e).children("tr");
                                       $(trChild).each(function(ind,elem){
                                           var appTd = $(elem).children(".tdAppLaw2");
@@ -536,8 +546,8 @@
 
           
 
-          if(dayNumbers[0] > dayNumbers[6])
-            wkSwtch = false
+          /*if(dayNumbers[0] > dayNumbers[6])
+            wkSwtch = false*/
 
           if(wkSwtch == false){
               var dsPst = [], dsNew = [], crtMnt;;

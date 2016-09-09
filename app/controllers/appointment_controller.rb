@@ -182,8 +182,21 @@ class AppointmentController < ApplicationController
   end
 
   def searchCustomer
-      @client = Client.where("lower(nombreclt) = ? AND lower(apaternoclt) = ? OR lower(emailclt) = ? OR telefonoclt = ? OR numcaso = ?", params[:name].downcase,params[:apaterno].downcase,params[:email].downcase,params[:telefono],params[:numcase]).first
-      
+      # opt = params[:opt]
+
+      # if opt == 1
+      #     @client = Client.where("lower(nombreclt) = ? AND lower(apaternoclt) = ? OR lower(emailclt) = ? OR telefonoclt = ? OR numcaso = ?", params[:name].downcase,params[:apaterno].downcase,params[:email].downcase,params[:telefono],params[:numcase]).first
+      # elsif == 2
+
+      # elsif  == 3
+
+      # elsif == 4
+        
+        
+        
+
+
+
       respond_to do |format|
           format.json { render :text => @client.to_json }
       end
