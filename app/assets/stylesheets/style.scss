@@ -34,6 +34,14 @@ body{
    padding-top: 10px;
    margin-top: 5px;
 }
+.buscador input[type=text]{
+  position: absolute;
+  right: 380px;
+  padding-top: 5px;
+  margin-top: 0px;
+  width: 220px;
+}
+
 .avatar {
    position: absolute;
    right: 12.5%;
@@ -821,7 +829,7 @@ ul li a:hover {
     text-decoration: none;
 }
 
-.modal-body, .modal-body-edit, .modal-attend{
+.modal-body, .modal-body-edit, .modal-attend, .modal-body-clts{
     border-radius: 4px;
     position: fixed;
     background: #FFFFFF;

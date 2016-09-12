@@ -38,6 +38,61 @@
             });
         }
 
+        $("#cltAppSrch").on("keypress", function(e){
+            var txt = $(this).val();
+            if(e.which == 13){
+                if(txt == ""){
+                    alert("Debe escribir un nombre o numero telefonico.")
+                    txt = '';
+                }else{
+
+                    var clt, opt;
+
+                    if(!parseInt(txt)){
+                        var fllNm = txt.split(" ");
+                        clt = fllNm[0];
+                        opt = 1;
+                    }else{
+                        clt = txt; opt = 2;
+                    }
+
+                    console.log(txt)
+                    var data = { client : clt, opt : opt };
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/appointment/searchCustomer",
+                        dataType: "json",
+                        contentType: "application/json; charset-utf8",
+                        data: JSON.stringify(data),
+                        success: function(resp){
+                            if(resp == 0)
+                                alert("No se encontraron resultados.")
+                            else{
+                                var modalAppoint = $(".modal-body-clts");
+
+                                $("#tblCltsLst").empty();
+                                var tr = "", fecha, hora;
+                                $(resp).each(function(i,e){
+                                    fecha = moment(e.fecha).format("DD-MMM-YYYY");
+                                    hora = moment(e.hora).format("HH:mm:ss a");
+                                    tr += "<tr><td>" + e.nombreclt + " " + e.apaternoclt + "</td><td>" + e.telefonoclt + "</td><td>" + fecha + "</td><td>" + hora + "</td></tr>";
+                                });
+                                $("#tblCltsLst").append(tr);
+
+                                modalAppoint.fadeIn(500);
+                                capaModalAppear(modalAppoint)
+                            }
+                        }, error: function(xhr, status, error){
+                            console.log(xhr);
+                            alert(error);
+                        }
+                    })
+                }
+                    
+            }
+        })
+
         $("#allCalendars").on("click", function(){
             $(".childtdcitas, .dayApp").show();
         });   

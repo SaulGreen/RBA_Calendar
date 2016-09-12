@@ -182,6 +182,9 @@ class AppointmentController < ApplicationController
   end
 
   def searchCustomer
+      client = params[:client]
+      option = params[:opt]
+      
       # opt = params[:opt]
 
       # if opt == 1
@@ -192,11 +195,14 @@ class AppointmentController < ApplicationController
 
       # elsif == 4
         
+      if option == 1
+        @client = Client.where("lower(apaternoclt) = ?",client.downcase).joins(:appointment).select("nombreclt, apaternoclt, telefonoclt, fecha, hora").order("fecha DESC").all
+      elsif option == 2
+        @client = Client.where("telefonoclt = ?",client).joins(:appointment).select("nombreclt, apaternoclt, telefonoclt, fecha, hora").order("fecha DESC").all
+      else
+        @client = nil
+      end
         
-        
-
-
-
       respond_to do |format|
           format.json { render :text => @client.to_json }
       end
