@@ -196,9 +196,9 @@ class AppointmentController < ApplicationController
       # elsif == 4
         
       if option == 1
-        @client = Client.where("lower(apaternoclt) = ?",client.downcase).joins(:appointment).select("nombreclt, apaternoclt, telefonoclt, fecha, hora").order("fecha ASC").all
+        @client = Client.where("lower(apaternoclt) = ? AND status_app = 1",client.downcase).joins(:appointment).select("nombreclt, apaternoclt, telefonoclt, fecha, hora").order("fecha ASC").all
       elsif option == 2
-        @client = Client.where("telefonoclt = ?",client).joins(:appointment).select("nombreclt, apaternoclt, telefonoclt, fecha, hora").order("fecha ASC").all
+        @client = Client.where("telefonoclt = ? AND status_app = 1",client).joins(:appointment).select("nombreclt, apaternoclt, telefonoclt, fecha, hora").order("fecha ASC").all
       else
         @client = nil
       end
