@@ -1,10 +1,11 @@
 class AppointmentPdf < Prawn::Document
 	def initialize(appointments,usrRole)
-		super()
+		super(:page_layout => :landscape)
 		@appointments = appointments
 		@usrRole = usrRole 
 		text_content
 		table_content
+
 	end
 
 	def text_content 
@@ -38,6 +39,7 @@ class AppointmentPdf < Prawn::Document
 		if @usrRole != 4
 			table appointments_rows do
 				row(0).font_style = :bold
+				self.cell_style = { size: 10}
 				self.header = true
 				self.row_colors = ["DDDDDD","FFFFFF"]
 				self.column_widths = [80,80,160,90,80,80]
@@ -45,6 +47,7 @@ class AppointmentPdf < Prawn::Document
 		else
 			table appointments_rows do
 				row(0).font_style = :bold
+				self.cell_style = { size: 10}
 				self.header = true
 				self.row_colors = ["DDDDDD","FFFFFF"]
 				self.column_widths = [80,60,140,90,80,80,0]
@@ -56,7 +59,7 @@ class AppointmentPdf < Prawn::Document
 		#"id", "client_id, tipocaso, nombre, apaterno, color_id, fecha, hora, nombreClt, apaternoClt, numpersonas, comentario, telefonoClt, emailClt, attendance"
 		
 		if @usrRole == 4
-			[["Hora","# Caso","Nombre del Cliente","Telefono","Asesor","Asistencia"]] +
+			[["Hora","# Caso","Nombre del Cliente","Tipo de caso","Asesor","Comentario"]] +
 			@appointments.map do |app|
 				asistencia = "Sin confirmar"
 				if app.attendance.to_s == "false"
@@ -71,10 +74,10 @@ class AppointmentPdf < Prawn::Document
 				time = app.hora
 				capLetter = app.nombre[0] + "."
 
-				[time.strftime('%r'),app.numcaso.to_s, app.nombreclt.to_s + " " + app.apaternoclt.to_s, app.telefonoclt.to_s, capLetter + " " + app.apaterno, asistencia ]
+				[time.strftime('%r'),app.numcaso.to_s, app.nombreclt.to_s + " " + app.apaternoclt.to_s, app.tipocaso.to_s, capLetter + " " + app.apaterno, app.comentario ]
 			end
 		else
-			[["Hora","Num. Caso","Nombre del Cliente","Telefono","Asistencia"]] +
+			[["Hora","Num. Caso","Nombre del Cliente","Tipo de caso","Comentario"]] +
 			@appointments.map do |app|
 				asistencia = "Sin confirmar"
 				if app.attendance.to_s == "false"
@@ -88,7 +91,7 @@ class AppointmentPdf < Prawn::Document
 				time = Time.new
 				time = app.hora
 
-				[time.strftime('%r'),app.numcaso.to_s, app.nombreclt.to_s + " " + app.apaternoclt.to_s, app.telefonoclt.to_s, asistencia ]
+				[time.strftime('%r'),app.numcaso.to_s, app.nombreclt.to_s + " " + app.apaternoclt.to_s, app.tipocaso.to_s, app.comentario ]
 			end
 		end
 	end

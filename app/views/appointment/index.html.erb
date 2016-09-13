@@ -86,6 +86,8 @@
 
           if(tipoCita == null || tipoCita == "" || !parseInt(abogado) || parseInt(abogado) == ""){
               alert("Debe seleccionar a que tipo de cita acude el cliente y un asesor.")
+          }else if(nombre == "" || apaterno == ""){
+              alert("Debe ingresar un nombre y apellido para el cliente.")
           }else{
               $.ajax({
                   type: "POST",
