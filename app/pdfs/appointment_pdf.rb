@@ -42,7 +42,7 @@ class AppointmentPdf < Prawn::Document
 				self.cell_style = { size: 10}
 				self.header = true
 				self.row_colors = ["DDDDDD","FFFFFF"]
-				self.column_widths = [80,80,160,90,80,80]
+				self.column_widths = [80,80,160,90,80,260]
 			end
 		else
 			table appointments_rows do
@@ -50,7 +50,7 @@ class AppointmentPdf < Prawn::Document
 				self.cell_style = { size: 10}
 				self.header = true
 				self.row_colors = ["DDDDDD","FFFFFF"]
-				self.column_widths = [80,60,140,90,80,80,0]
+				self.column_widths = [80,60,140,90,80,260,0]
 			end
 		end
 	end
