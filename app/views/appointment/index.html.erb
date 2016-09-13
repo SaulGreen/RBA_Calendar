@@ -81,6 +81,7 @@
           hora = horaCita;
           numPersona = $("#personas").val();
           comentario = $("#textarea").val();
+          idCase = $("#numCase").val();
 
           var d = fecha + " " + hora;
 
@@ -94,7 +95,7 @@
                   url: "/appointment/nuevoCliente",
                   contentType: "application/json",
                   dataType: "json",
-                  data: JSON.stringify({  client: { nombreclt: nombre, apaternoclt: apaterno, amaternoclt: amaterno, emailclt: email, direccion: direccion, telefonoclt: telefono }}),
+                  data: JSON.stringify({  client: { nombreclt: nombre, apaternoclt: apaterno, amaternoclt: amaterno, emailclt: email, direccion: direccion, telefonoclt: telefono, numcaso: idCase }}),
                   success: function(resp){
                       numCliente = resp.id;
 

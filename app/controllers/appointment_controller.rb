@@ -274,7 +274,7 @@ class AppointmentController < ApplicationController
   end
 
   def client_params
-    params.require(:client).permit(:nombreclt,:apaternoclt,:amaternoclt,:emailclt,:direccion,:telefonoclt)
+    params.require(:client).permit(:nombreclt,:apaternoclt,:amaternoclt,:emailclt,:direccion,:telefonoclt, :numcaso)
   end
 
   def check_params
