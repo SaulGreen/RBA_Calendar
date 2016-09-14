@@ -215,7 +215,18 @@
               });
           }
       });
-      
+
+      /*function NamesToCaps(string){
+          if(string != ""){
+              var newString = string.replace(/\b[a-z]/g,function(f){return f.toUpperCase();})
+          }else{
+              return null;
+          }
+
+          return newString;
+          
+      }
+      */
       function getWeekAppointments(){
 
           var fstDay = $(".cita_1").children(":nth-child(1)").data("fecha")
@@ -254,7 +265,7 @@
                           $(resp).each(function(i,e){
                               var hora = moment(e.hora).format("HH:mm:ss");
                               var fecha = moment(e.fecha).format("YYYY-MM-DD");
-                              var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + fecha + "' data-h='" + hora + "'><h3 class='cFullName'>" + e.nombreclt + " " + e.apaternoclt + "</h3><p class='cCaseType'>" + e.emailclt + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
+                              var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + fecha + "' data-h='" + hora + "'><h3 class='cFullName'>" + toTitleCase(e.nombreclt) + " " + toTitleCase(e.apaternoclt) + "</h3><p class='cCaseType'>" + e.emailclt + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
 
                               $(arrayColors).each(function(idx,elem){
                                   if(elem.auxId == e.color_id)
@@ -267,11 +278,10 @@
 
                                   $(td).append(boxCita)
                                   //alert(boxCita)
-                              }
-                              else{
+                              }else{
                                   var appHour = $('[data-hour="' + hora + '"]');
                                   var td = $(appHour).find('[data-fecha="' + fecha + '"]');
-                                  var tablita = "<tr class='childtdcitas'><td class='tdAppLaw2' style='background-color:" + aux + "'><p class='recCltName' data-clt='" + e.id + "'>" + e.nombreclt + " " + e.apaternoclt + "</p><p class='cTypeLaw'><span class='recCltCase'>" + e.tipocaso + "</span> - <span class='recCltLawyer' data-lyr='" + e.user_id + "'>" + FisrtNameFix(e.nombre) + " " + e.apaterno + "</span></p><p class='recCltMail' hidden>" + e.emailclt + "</p><p class='recCltTel' hidden>" + e.telefonoclt + "</p><p hidden><span class='recCltComment'>" + e.comentario + "</span><span class='recCltDate'>" + fecha + "</span><span class='recCltHour' hidden>" + hora +"</span></p><span class='recCltAttnd' hidden>" + e.attendance + "</span></td></tr>";
+                                  var tablita = "<tr class='childtdcitas'><td class='tdAppLaw2' style='background-color:" + aux + "'><p class='recCltName' data-clt='" + e.id + "'>" + toTitleCase(e.nombreclt) + " " + toTitleCase(e.apaternoclt) + "</p><p class='cTypeLaw'><span class='recCltCase'>" + e.tipocaso + "</span> - <span class='recCltLawyer' data-lyr='" + e.user_id + "'>" + FisrtNameFix(toTitleCase(e.nombre)) + " " + toTitleCase(e.apaterno) + "</span></p><p class='recCltMail' hidden>" + e.emailclt + "</p><p class='recCltTel' hidden>" + e.telefonoclt + "</p><p hidden><span class='recCltComment'>" + e.comentario + "</span><span class='recCltDate'>" + fecha + "</span><span class='recCltHour' hidden>" + hora +"</span></p><span class='recCltAttnd' hidden>" + e.attendance + "</span></td></tr>";
                                   $(td).find(".tbdAddApp").append(tablita);
                               }
 
@@ -324,6 +334,8 @@
               $(".testbox").css({"display":"none"});
           }
       });
+
+
 
       $("body").on("click", ".tdAppLaw2", function(e){
           $(".tdAppLaw2").removeClass("appSelected");
@@ -531,6 +543,11 @@
               horaCita = $(this).parent(".trHour").attr("data-hour");
           }
       });
+
+      function toTitleCase(str)
+      {
+          return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+      }
 
       function WeeklyAppointments(month,year,wkSwtch){
 
