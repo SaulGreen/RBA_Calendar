@@ -5,9 +5,9 @@ class DayController < ApplicationController
 	
   	def index
       if current_user.role_id != 4
-          @appointments = Appointment.joins(:client).joins(:user).joins(:case_type).where("status_app = 1 AND user_id = ? AND fecha = ?", current_user.id, params[:fecha]).all.select("numcaso", "client_id, tipocaso, nombre, apaterno, color_id, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance").order("hora ASC")
+          @appointments = Appointment.joins(:client).joins(:user).joins(:case_type).where("status_app = 1 AND user_id = ? AND fecha = ?", current_user.id, params[:fecha]).all.select("numcaso", "client_id, tipocaso, nombre, apaterno, color_id, fecha, hora, nombreclt, apaternoclt, numpersonas, lower(comentario) as comnt, telefonoclt as tel, emailclt, attendance").order("hora ASC")
       else
-          @appointments = Appointment.joins(:client).joins(:user).joins(:case_type).where("status_app = 1 AND fecha = ?", params[:fecha]).all.select("numcaso", "client_id, tipocaso, nombre, apaterno, color_id, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance").order("hora ASC")
+          @appointments = Appointment.joins(:client).joins(:user).joins(:case_type).where("status_app = 1 AND fecha = ?", params[:fecha]).all.select("numcaso", "client_id, tipocaso, nombre, apaterno, color_id, fecha, hora, nombreclt, apaternoclt, numpersonas, lower(comentario) as comnt, telefonoclt as tel, emailclt, attendance").order("hora ASC")
       end
 
       #@appointments = Appointment.where(:user_id => current_user.id,:fecha => params[:fecha])
