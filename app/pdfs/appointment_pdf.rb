@@ -42,7 +42,8 @@ class AppointmentPdf < Prawn::Document
 				self.cell_style = { size: 10}
 				self.header = true
 				self.row_colors = ["DDDDDD","FFFFFF"]
-				self.column_widths = [80,70,160,80,90,80,190]
+				self.column_widths = [70,50,140,80,90,80,190,60]
+				#self.column_widths = [70,50,140,80,90,80,190,0]
 			end
 		else
 			table appointments_rows do
@@ -77,7 +78,7 @@ class AppointmentPdf < Prawn::Document
 				[time.strftime('%r'),app.numcaso.to_s, app.nombreclt.to_s + " " + app.apaternoclt.to_s,app.tel.to_s, app.tipocaso.to_s, capLetter + " " + app.apaterno, app.comnt ]
 			end
 		else
-			[["Hora","Num. Caso","Nombre del Cliente","Telefono","Tipo de caso","Comentario"]] +
+			[["Hora","# Caso","Nombre del Cliente","Telefono","Tipo de caso","Asistencia","Comentario"]] +
 			@appointments.map do |app|
 				asistencia = "Sin confirmar"
 				if app.attendance.to_s == "false"
@@ -91,7 +92,7 @@ class AppointmentPdf < Prawn::Document
 				time = Time.new
 				time = app.hora
 
-				[time.strftime('%r'),app.numcaso.to_s, app.nombreclt.to_s + " " + app.apaternoclt.to_s, app.tel.to_s, app.tipocaso.to_s, app.comnt ]
+				[time.strftime('%r'),app.numcaso.to_s, app.nombreclt.to_s + " " + app.apaternoclt.to_s, app.tel.to_s, app.tipocaso.to_s, asistencia, app.comnt ]
 			end
 		end
 	end
