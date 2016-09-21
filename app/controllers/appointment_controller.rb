@@ -165,7 +165,7 @@ class AppointmentController < ApplicationController
 	end
 
   def GetAppointments
-      if current_user.role_id == 4
+      if current_user.role_id == 4 || current_user.role_id == 2
           @weekAppointments = Appointment.joins(:client).joins(:user).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id","nombre, apaterno, color_id", "user_id, client_id, tipocaso, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance, created_by_id, last_edited_by_id")
           #@weekAppointments = Appointment.joins(:client).joins(:lawyer).joins(:creator).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id","nombre, apaterno, color_id", "user_id, client_id, tipocaso, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance")
           #@weekAppointments = Appointment.joins(:client).joins(:user).includes(:created_by).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id, client_id, nombre, apaterno, color_id","created_by_id")
