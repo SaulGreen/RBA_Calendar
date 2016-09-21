@@ -171,7 +171,7 @@ class AppointmentController < ApplicationController
           #@weekAppointments = Appointment.joins(:client).joins(:user).includes(:created_by).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id, client_id, nombre, apaterno, color_id","created_by_id")
           #.select("user_id, client_id, tipocaso, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance").select("nombre, apaterno, color_id") 
       else
-          @weekAppointments = Appointment.joins(:client).where("user_id = ? AND status_app = 1 AND fecha >= ? AND fecha <= ?", current_user.id, params[:fecha1],params[:fecha2]).select("id", "client_id, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance, created_by")
+          @weekAppointments = Appointment.joins(:client).where("user_id = ? AND status_app = 1 AND fecha >= ? AND fecha <= ?", current_user.id, params[:fecha1],params[:fecha2]).select("id", "client_id, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance, created_by_id, last_edited_by_id")
       end
 
       respond_to do |format|
