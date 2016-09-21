@@ -247,6 +247,7 @@
               dataType: "json",
               data: data,
               success: function(resp){
+                console.log(resp)
                   var arrayColors = [];
                   $.ajax({
                       url: '/day/GetAllColors',
@@ -254,6 +255,7 @@
                       dataType: "json",
                       contentType: "application/json; charset-utf8",
                       success: function(respCol){
+
                           $(respCol).each(function(i,e){
                               var auxId = e.id;
                               var auxColor = e.color;
@@ -368,15 +370,16 @@
                   dataType: "json",
                   data: JSON.stringify(data),
                   success: function(resp){
+                      if(resp > 0)
+                          alert("Seleccione una fecha y hora disponible para el asesor al cual desea modificar la cita.")
+                      else{
+                          WeeklyAppointments(currentMonth,year,true);
+                          getWeekAppointments();
 
-                      WeeklyAppointments(currentMonth,year,true);
-                      getWeekAppointments();
-
-                      editCita.fadeOut(500);
-                      $("#capaModal").fadeOut(500).remove();
-                      $("#slctEmp-Edit").prop("selectedIndex",0);
-
-                  console.log(resp)
+                          editCita.fadeOut(500);
+                          $("#capaModal").fadeOut(500).remove();
+                          $("#slctEmp-Edit").prop("selectedIndex",0);
+                      }
                   }, error: function(xhr,status,error){
                       console.log(xhr);
                       alert(error);
@@ -528,13 +531,24 @@
 
       $("body").on("contextmenu",".tdDayApp",function(e){
           e.preventDefault();
+          var screenWidth = screen.width;
+          //alert(screenWidth + " -- " + $(".testbox").css("marginLeft"))
           var vacCheck = $(this).attr("data-vac");
           //console.log($(this));
           if(vacCheck == "true")
               alert("Dia de periodo vacacional, intenta en un dia disponible.");
           else{
               var menu = $(".testbox");
-              menu.css({"display": "block","top": e.pageY + "px","left": e.pageX + "px" });
+              var normalLeft = parseInt(e.pageX);
+              var boxWidth = parseInt($(".testbox").width());
+              var boxLimit = normalLeft + boxWidth;
+              if(boxLimit > screenWidth){
+                  boxLeft = ((normalLeft + boxWidth) - screenWidth); 
+                  boxLeft = normalLeft - (boxLeft + 20);
+              }else
+                  boxLeft = e.pageX;
+
+              menu.css({"display": "block","top": e.pageY + "px","left": boxLeft + "px" });
                   var retardo = setTimeout(function(){
                   menu.css({"display": "none"});
               }, 2000); 
@@ -544,10 +558,7 @@
           }
       });
 
-      function toTitleCase(str)
-      {
-          return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-      }
+      
 
       function WeeklyAppointments(month,year,wkSwtch){
 

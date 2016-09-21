@@ -17,23 +17,35 @@ class AppointmentController < ApplicationController
   end
 
   def update
-      @appointment = Appointment.where("id = ?", params[:id])
-      @appointment.update_all(:fecha => params[:fecha], :hora => params[:hora], :user_id => params[:user_id])
-      appmnt = Appointment.where("id = ?", params[:id]).first
+      @appointment = Appointment.where("id = ?", params[:id]).first
+      appCheck = Appointment.where(:fecha => params[:fecha], :hora => params[:hora], :user_id => params[:user_id], :status_app => 1).count
 
+      if appCheck > 0
+          respond_to do |format|
+              format.json { render :text => appCheck.to_json }
+          end
+      else 
+          Appointment.where("id = ?", params[:id]).update_all(:fecha => params[:fecha], :hora => params[:hora], :user_id => params[:user_id], :last_edited_by => current_user.id)
+          #@appointment.update_all(:fecha => params[:fecha], :hora => params[:hora], :user_id => params[:user_id], :last_edited_by => current_user.id)
 
-      customer = appmnt.client_id
-      client = Client.where(:id => customer).first
-      fechaStr = appmnt.fecha.strftime('%v').to_s
-      horaStr = appmnt.hora.strftime('%r')
-      user = appmnt.user_id
-      lawyer = User.where(:id => user).first
+          appmnt = Appointment.where("id = ?", params[:id]).first
 
-      LogAppointment(current_user,5,client,fechaStr,horaStr,lawyer)
+          customer = appmnt.client_id
+          client = Client.where(:id => customer).first
+          fechaStr = appmnt.fecha.strftime('%v').to_s
+          horaStr = appmnt.hora.strftime('%r')
+          user = appmnt.user_id
+          lawyer = User.where(:id => user).first
 
-      respond_to do |format|
-          format.json { render :text => @appointment.to_json }
+          LogAppointment(current_user,5,client,fechaStr,horaStr,lawyer)
+
+          respond_to do |format|
+              format.json { render :text => @appointment.to_json }
+          end
       end
+          
+
+      
   end
 
 	def GetUserData
@@ -57,6 +69,9 @@ class AppointmentController < ApplicationController
 
   def nuevaCita
       @appointment = Appointment.new(appointment_params);
+      @appointment.created_by = current_user.id
+      @appointment.last_edited_by = current_user.id
+
       @cliente = Client.where(:id => :client_id)
       clienteDst = Client.where(:id => :client_id)
 
@@ -109,6 +124,7 @@ class AppointmentController < ApplicationController
   def cancelAppointment
       @appointment = Appointment.find(params[:id])
       @appointment.update_attribute(:status_app, 0)
+      @appointment.last_edited_by = current_user.id
       appmnt = Appointment.where("id = ?", params[:id]).first
       
       user = appmnt.user_id
@@ -150,9 +166,12 @@ class AppointmentController < ApplicationController
 
   def GetAppointments
       if current_user.role_id == 4
-          @weekAppointments = Appointment.joins(:client).joins(:user).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id", "user_id, client_id, tipocaso, nombre, apaterno, color_id, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance")
+          @weekAppointments = Appointment.joins(:client).joins(:user).joins(:user).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id","nombre, apaterno, color_id", "user_id, client_id, tipocaso, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance, created_by_id, last_edited_by_id")
+          #@weekAppointments = Appointment.joins(:client).joins(:lawyer).joins(:creator).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id","nombre, apaterno, color_id", "user_id, client_id, tipocaso, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance")
+          #@weekAppointments = Appointment.joins(:client).joins(:user).includes(:created_by).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id, client_id, nombre, apaterno, color_id","created_by_id")
+          #.select("user_id, client_id, tipocaso, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance").select("nombre, apaterno, color_id") 
       else
-          @weekAppointments = Appointment.joins(:client).where("user_id = ? AND status_app = 1 AND fecha >= ? AND fecha <= ?", current_user.id, params[:fecha1],params[:fecha2]).select("id", "client_id, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance")
+          @weekAppointments = Appointment.joins(:client).where("user_id = ? AND status_app = 1 AND fecha >= ? AND fecha <= ?", current_user.id, params[:fecha1],params[:fecha2]).select("id", "client_id, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance, created_by")
       end
 
       respond_to do |format|

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825232354) do
+ActiveRecord::Schema.define(version: 20160920222548) do
 
   create_table "actions", force: :cascade do |t|
     t.string   "accion"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20160825232354) do
     t.text     "comentario"
     t.date     "fecha"
     t.time     "horainicio"
-    t.time     "horafinal" 
+    t.time     "horafinal"
     t.integer  "id_user"
     t.boolean  "completo"
     t.datetime "created_at", null: false
@@ -36,14 +36,16 @@ ActiveRecord::Schema.define(version: 20160825232354) do
     t.date     "fecha"
     t.time     "hora"
     t.text     "comentario"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "client_id"
     t.integer  "user_id"
     t.integer  "case_type_id"
-    t.integer  "status_app",   default: 1
+    t.integer  "status_app",        default: 1
     t.integer  "tipocita"
     t.boolean  "attendance"
+    t.integer  "created_by_id"
+    t.integer  "last_edited_by_id"
   end
 
   add_index "appointments", ["case_type_id"], name: "index_appointments_on_case_type_id"

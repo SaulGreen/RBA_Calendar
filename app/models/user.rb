@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
 
     belongs_to :color
     belongs_to :role
+    #has_many :attendance, inverse_of: :user, :class_name => "Appointment"
+    #has_many :creators, inverse_of: :created_by, :class_name => "Appointment" 
     has_many :appointment
     has_many :vacation
 
