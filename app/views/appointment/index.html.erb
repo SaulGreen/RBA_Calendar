@@ -184,7 +184,7 @@
                               $(resp).each(function(i,e){
                                   var hora = moment(e.hora).format("HH:mm:ss");
                                   var fecha = moment(e.fecha).format("YYYY-MM-DD");
-                                  var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + fecha + "' data-h='" + hora + "'><h3 class='cFullName'>" + e.nombreclt + " " + e.apaternoclt + "</h3><p class='cCaseType'>" + e.emailclt + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><p hidden class='cLawyer'>" + e.nombre + " " + e.apaterno + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
+                                  var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + fecha + "' data-h='" + hora + "'><h3 class='cFullName'>" + e.nombreclt + " " + e.apaternoclt + "</h3><p class='cCaseType'>" + e.tipocaso + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><p hidden class='cLawyer'>" + e.nombre + " " + e.apaterno + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
 
                                   console.log(e)
 
@@ -267,7 +267,7 @@
                           $(resp).each(function(i,e){
                               var hora = moment(e.hora).format("HH:mm:ss");
                               var fecha = moment(e.fecha).format("YYYY-MM-DD");
-                              var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + fecha + "' data-h='" + hora + "'><h3 class='cFullName'>" + toTitleCase(e.nombreclt) + " " + toTitleCase(e.apaternoclt) + "</h3><p class='cCaseType'>" + e.emailclt + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
+                              var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + fecha + "' data-h='" + hora + "'><h3 class='cFullName'>" + toTitleCase(e.nombreclt) + " " + toTitleCase(e.apaternoclt) + "</h3><p class='cCaseType'>" + e.tipocaso + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
 
                               $(arrayColors).each(function(idx,elem){
                                   if(elem.auxId == e.color_id)
@@ -424,7 +424,7 @@
           modalAppoint.find(".cltName").text(boton.siblings(".cFullName").text());
           modalAppoint.find(".cltDate").text(boton.parent().data("f"));
           modalAppoint.find(".cltHora").text(boton.parent().data("h"));
-          modalAppoint.find(".cltCase").text("Tipo de caso");
+          modalAppoint.find(".cltCase").text(boton.siblings(".cCaseType").text());
           modalAppoint.find(".cltPhone").text(boton.siblings(".cTel").text());
           modalAppoint.find(".cltEmail").text(boton.siblings(".cEmail").text());
           modalAppoint.find(".cltComment").text(boton.siblings(".appComment").text());
@@ -532,9 +532,7 @@
       $("body").on("contextmenu",".tdDayApp",function(e){
           e.preventDefault();
           var screenWidth = screen.width;
-          //alert(screenWidth + " -- " + $(".testbox").css("marginLeft"))
           var vacCheck = $(this).attr("data-vac");
-          //console.log($(this));
           if(vacCheck == "true")
               alert("Dia de periodo vacacional, intenta en un dia disponible.");
           else{

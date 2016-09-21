@@ -246,9 +246,18 @@
 
         $("body").on("contextmenu",".tdlargo",function(e){
             e.preventDefault();
+            var screenWidth = screen.width;
             if($(this).children().size() == 0){
                 var menu = $(".testbox");
-                menu.css({"display": "block","top": e.pageY + "px","left": e.pageX + "px" });
+                var normalLeft = parseInt(e.pageX);
+                var boxWidth = parseInt($(".testbox").width());
+                var boxLimit = normalLeft + boxWidth;
+                if(boxLimit > screenWidth){
+                    boxLeft = ((normalLeft + boxWidth) - screenWidth); 
+                    boxLeft = normalLeft - (boxLeft + 20);
+                }else
+                    boxLeft = e.pageX;
+                menu.css({"display": "block","top": e.pageY + "px","left": boxLeft + "px" });
                     var retardo = setTimeout(function(){
                     menu.css({"display": "none"});
                 }, 2000); 
