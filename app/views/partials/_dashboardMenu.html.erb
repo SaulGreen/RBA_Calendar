@@ -14,7 +14,7 @@
             <a id="dashCus" data-div="" class="lnkNav"><i class="fa fa-users faNewClass" style="font-size:2em; top:3px; bottom:3px;"></i><span class="nav-text">Clientes</span></a>
         </li>
         <li>
-            <a id="dashAnn" data-div="" class="lnkNav"><i class="fa fa-bullhorn faNewClass" style="font-size:2em; top:3px; bottom:3px;"></i><span class="nav-text">Anuncios</span></a>
+            <a id="dashAnn" data-div="divAvi" class="lnkNav"><i class="fa fa-bullhorn faNewClass" style="font-size:2em; top:3px; bottom:3px;"></i><span class="nav-text">Anuncios</span></a>
         </li>
         <% if current_user.role_id == 1 || current_user.role_id == 2 %>
             <li class="has-subnav">
@@ -59,6 +59,27 @@
 
         $("#dashCal").on("click", function(e){
             window.location.href = "/appointment/index"
+        });
+
+        $("#dashAnn").on("click", function(){
+            $("#tblAnns").empty();
+
+            $.ajax({
+                type: "POST",
+                url: "/log/GetUserAnnouncements",
+                dataType: "json",
+                contentType: "application/json; charset-UTF8",
+                success: function(resp){
+                    var tr = "";
+                    $(resp).each(function(i,e){
+                        tr += "<tr><td>" + moment(e.created_at).format("DD-MM-YYYY") + "</td><td>" + moment(e.fecha).format("DD-MM-YYYY") + "</td><td>" + moment(e.horainicial).format("HH:mm") + "</td><td>" + moment(e.horafinal).format("HH:mm") + "</td><td>" + e.completo + "</td><td><a class='btn btn-success btn-xs actvUsr'><span class='fa fa-check fa-1'></span></a> <a class='btn btn-info btn-xs edtAnns'><span class='fa fa-pencil-square-o fa-1'></span></a> <a class='btn btn-danger btn-xs dctvUsr'><span class='fa fa-times fa-1'></span></a></td></tr>"
+                    });
+                    $("#tblAnns").append(tr);
+                }, error: function(xhr,status,error){
+                    console.log(xhr);
+                    alert(error);
+                }
+            })
         })
     })
 </script>

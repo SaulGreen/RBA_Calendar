@@ -247,7 +247,7 @@
               dataType: "json",
               data: data,
               success: function(resp){
-                console.log(resp)
+                //console.log(resp)
                   var arrayColors = [];
                   $.ajax({
                       url: '/day/GetAllColors',
@@ -551,6 +551,7 @@
                   menu.css({"display": "none"});
               }, 2000); 
               clearTimeout(retardo);
+              dayNum = $(this).attr("data-day");
               fechaCita = $(this).attr("data-fecha");
               horaCita = $(this).parent(".trHour").attr("data-hour");
           }

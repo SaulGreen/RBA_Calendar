@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  #before_action :CheckIfUserIsActive
   before_action :GetUserData
 
   def index
@@ -39,6 +40,14 @@ class UsersController < ApplicationController
       end
       
   end
+
+  # def CheckIfUserIsActive
+  #   if current_user.status != 2
+  #       redirect_to root_path
+  #   else
+  #       render :index, :notice => "Tu cuenta no esta activa, verificalo con el personal de recursos humanos."
+  #   end
+  # end
 
   def update
   	@user = User.find(params[:id])

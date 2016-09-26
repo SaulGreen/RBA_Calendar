@@ -829,7 +829,7 @@ ul li a:hover {
     text-decoration: none;
 }
 
-.modal-body, .modal-body-edit, .modal-attend, .modal-body-clts{
+.modal-body, .modal-body-edit, .modal-attend, .modal-body-clts, .modal-announce{
     border-radius: 4px;
     position: fixed;
     background: #FFFFFF;
@@ -1198,7 +1198,7 @@ h1 {
 
 .testbox {
   position: absolute;
-  z-index:1001;
+  z-index:22;
   display: none;
   margin: 20px auto;
   width: 480px; 
@@ -3216,7 +3216,7 @@ h1 {
 
 .testbox {
   position: absolute;
-  z-index:1001;
+  z-index:22;
   display: none;
   margin: 20px auto;
   width: 480px; 

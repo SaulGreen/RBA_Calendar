@@ -1,61 +1,93 @@
 <%= render "partials/mainNav" %>
 <%= render "partials/dashboardMenu"%>
 
-<div id="divAvi" class="dshBox divVar" >
-	<h3>Avisos y dias festivos</h3>
+<div id="divAvi" class="dshBox divVar" hidden>
+	<h3>Avisos</h3>
 	<hr style="border-top: 1px solid #ccc;">
 	<div id="divAdv">
-        <h4>Aviso de ausencia</h4>
-		<label for="">Titulo:</label><input style="margin-left:0px;width:300px;height:30px;" class="" type="text" id="txtTitle">
-		<label for="">Fecha:</label><input type="date" id="dtAviso">
-		<label for="">Salida:</label>
-		<select id="slctOtAd">
-			<option value="10:30:00">10:30</option>
-			<option value="11:00:00">11:00</option>
-			<option value="11:30:00">11:30</option>
-			<option value="12:00:00">12:00</option>
-			<option value="12:30:00">12:30</option>
-			<option value="13:00:00">13:00</option>
-			<option value="13:30:00">13:30</option>
-			<option value="14:00:00">14:00</option>
-			<option value="14:30:00">14:30</option>
-			<option value="15:00:00">15:00</option>
-			<option value="15:30:00">15:30</option>
-			<option value="16:00:00">16:00</option>
-			<option value="16:30:00">16:30</option>
-			<option value="17:00:00">17:00</option>
-			<option value="17:30:00">17:30</option>
-			<option value="18:00:00">18:00</option>
-			<option value="18:30:00">18:30</option>
-		</select>
-		<label for="">Regreso:</label>
-		<select id="slctInAd">
-			<option value="10:30:00">10:30</option>
-			<option value="11:00:00">11:00</option>
-			<option value="11:30:00">11:30</option>
-			<option value="12:00:00">12:00</option>
-			<option value="12:30:00">12:30</option>
-			<option value="13:00:00">13:00</option>
-			<option value="13:30:00">13:30</option>
-			<option value="14:00:00">14:00</option>
-			<option value="14:30:00">14:30</option>
-			<option value="15:00:00">15:00</option>
-			<option value="15:30:00">15:30</option>
-			<option value="16:00:00">16:00</option>
-			<option value="16:30:00">16:30</option>
-			<option value="17:00:00">17:00</option>
-			<option value="17:30:00">17:30</option>
-			<option value="18:00:00">18:00</option>
-			<option value="18:30:00">18:30</option>
-		</select>
-		<label for="chkAll">Todo el dia </label><input type="checkbox" id="chkAll">
+        <h4>Aviso de ausencia o no interrupciones</h4>
+        <form class="form-inline">
+        	<div class="form-group">
+        		<label for="txtTitle" >Titulo:</label>
+        		<input type="text" class="form-control" id="txtTitle" style="margin-top:0px;">
+        	</div>
+        	<div class="form-group">
+        		<label for="txtTitle">Fecha:</label>
+        		<input type="date" class="form-control" id="dtAviso">
+        	</div>
+        	<div class="form-group">
+        		<label for="txtTitle">Salida:</label>
+        		<select class="form-control" id="slctOtAd">
+        			<option>Hora..</option>
+					<option value="10:30:00">10:30</option>
+					<option value="11:00:00">11:00</option>
+					<option value="11:30:00">11:30</option>
+					<option value="12:00:00">12:00</option>
+					<option value="12:30:00">12:30</option>
+					<option value="13:00:00">13:00</option>
+					<option value="13:30:00">13:30</option>
+					<option value="14:00:00">14:00</option>
+					<option value="14:30:00">14:30</option>
+					<option value="15:00:00">15:00</option>
+					<option value="15:30:00">15:30</option>
+					<option value="16:00:00">16:00</option>
+					<option value="16:30:00">16:30</option>
+					<option value="17:00:00">17:00</option>
+					<option value="17:30:00">17:30</option>
+					<option value="18:00:00">18:00</option>
+					<option value="18:30:00">18:30</option>
+				</select>
+				<label for="">Regreso:</label>
+				<select class="form-control" id="slctInAd">
+					<option>Hora..</option>
+					<option value="10:30:00">10:30</option>
+					<option value="11:00:00">11:00</option>
+					<option value="11:30:00">11:30</option>
+					<option value="12:00:00">12:00</option>
+					<option value="12:30:00">12:30</option>
+					<option value="13:00:00">13:00</option>
+					<option value="13:30:00">13:30</option>
+					<option value="14:00:00">14:00</option>
+					<option value="14:30:00">14:30</option>
+					<option value="15:00:00">15:00</option>
+					<option value="15:30:00">15:30</option>
+					<option value="16:00:00">16:00</option>
+					<option value="16:30:00">16:30</option>
+					<option value="17:00:00">17:00</option>
+					<option value="17:30:00">17:30</option>
+					<option value="18:00:00">18:00</option>
+					<option value="18:30:00">18:30</option>
+				</select>
+        	</div>
+        	<div class="form-group">
+        		<label>
+		          	<input type="checkbox" id="chkAll"> No asistir&eacute;
+		        </label>
+        	</div>
+        </form>
 		<br>
 		<label for="">Descripcion:</label><textarea name="" id="txtCmnt" cols="10" rows="10" class="form-control" style="height:50px; width:100%;"></textarea>
 		<br>
 		<input type="button" class="btn btn-info btn-sm pull-right" id="btnAdv" value="Guardar en calendario">
 		<br>
 		<hr style="border-top: 1px solid #ccc;">
-		<h4>Crear reunion</h4>
+
+		<h3>Anuncion/Avisos creados</h3>
+		<div style="background-color:white;">
+			<table class="table table-bordered">
+				<thead>
+					<th>Creado:</th>
+					<th>Dia programado</th>
+					<th>Hora inicial</th>
+					<th>Hora final</th>
+					<th>Dia entero</th>
+					<th>Opciones</th>
+				</thead>
+				<tbody id="tblAnns"></tbody>
+			</table>
+		</div>
+		
+		<!-- <h4>Crear reunion</h4>
 		<label for="">Fecha:</label><input type="date" id="dtMeet">
 		<label for="">Hora de inicio:</label>
 		<select id="slctInHr">
@@ -110,7 +142,7 @@
 			<tbody>
 			</tbody>
 		</table>
-		<input type="button" class="btn btn-sm btn-info pull-right" value="Enviar aviso">
+		<input type="button" class="btn btn-sm btn-info pull-right" value="Enviar aviso"> -->
 	</div>
 </div>
 
@@ -379,8 +411,14 @@
 			var comment = $("#txtCmnt").val();
 			var hrOut = $("#slctOtAd option:selected").val();
 			var hrIn = $("#slctInAd option:selected").val();
+			var allDay = $("#chkAll").val(); 
 
-			var data = { titulo: title, fecha: dtAviso, comentario: comment, horainicio: hrOut, horafinal: hrIn }
+			if($("#chkAll").is(":checked")){
+				allDay = true;
+			}else
+				allDay = false;
+
+			var data = { titulo: title, fecha: dtAviso, comentario: comment, horainicio: hrOut, horafinal: hrIn, allDay: allDay }
 
 			$.ajax({
 				type: "POST",
@@ -390,12 +428,26 @@
 				data: JSON.stringify(data),
 				success: function(resp){
 					console.log(resp)
+					if(resp != null){
+
+					}
 				},error: function(xhr,status,error){
 					console.log(xhr);
 					alert(error);
 				}
 			})
 		});
+
+		$("#chkAll").on("change", function(){
+			var elem = $(this);
+			if(elem.is(":checked")){
+				$("#slctOtAd").prop("selectedIndex",0).prop("disabled","disabled");
+				$("#slctInAd").prop("selectedIndex",0).prop("disabled","disabled");
+			}else{
+				$("#slctOtAd").prop("selectedIndex",0).prop("disabled",false);
+				$("#slctInAd").prop("selectedIndex",0).prop("disabled",false);
+			}
+		})
 
 		$("#dashInfo").on("click",function(){
 			$.ajax({
@@ -451,7 +503,7 @@
 							status = "<td><span class='label label-warning'>Pendiente</span></td>";
 
 
-						tr += "<tr data-usr='" + e.id + "'><td>" + cnt + "</td><td>" + e.nombre + " " + e.apaterno + "</td><td>" + e.email + "</td><td>" + e.telefono + "</td><td>" + rol + "</td><td>" + moment(e.fechaIng).format("DD-MM-YYYY") + "</td>" + status + "<td>" + e.ip + "</td><td><a class='btn btn-success btn-xs' href='#'><span class='fa fa-check fa-1'></span></a> <a class='btn btn-info btn-xs' href='#'><span class='fa fa-pencil-square-o fa-1'></span></a> <a class='btn btn-warning btn-xs' href='#'><span class='fa fa-ban fa-1'></span></a> <a href='#' class='btn btn-danger btn-xs'><span class='fa fa-times fa-1'></span></a></td></tr>";
+						tr += "<tr data-usr='" + e.id + "'><td>" + cnt + "</td><td>" + e.nombre + " " + e.apaterno + "</td><td>" + e.email + "</td><td>" + e.telefono + "</td><td>" + rol + "</td><td>" + moment(e.fechaIng).format("DD-MM-YYYY") + "</td>" + status + "<td>" + e.ip + "</td><td><a class='btn btn-success btn-xs actvUsr'><span class='fa fa-check fa-1'></span></a> <a class='btn btn-info btn-xs edtUsr'><span class='fa fa-pencil-square-o fa-1'></span></a> <a class='btn btn-warning btn-xs dltUsr'><span class='fa fa-ban fa-1'></span></a> <a class='btn btn-danger btn-xs dctvUsr'><span class='fa fa-times fa-1'></span></a></td></tr>";
 
 						cnt++;
 					});
@@ -520,6 +572,62 @@
 		});
 
 		GetUsersCaseTypes(null,$("#casesTbl"));
+
+		$("body").on("click", ".actvUsr", function(e){
+			e.preventDefault();
+			user = $(this).parent().parent().attr("data-usr");
+			var data = { user: user};
+			$.ajax({
+				type: "POST",
+				url: "/log/ActivateUserAccount",
+				dataType: "json",
+				contentType: "application/json; charset-UTF8",
+				data: JSON.stringify(data),
+				success: function(resp){
+
+					if(resp == 1)
+						alert("Cuenta de usuario activada exitosamente.")
+					else
+						alert("No cuentas con privilegios para realizar esta operacion.")
+
+				},error: function(xhr, status, error){
+					console.log(xhr);
+					alert(error);
+				}
+			});
+		});
+
+		$(".edtUsr").on("click", function(e){
+			e.preventDefault();
+		});
+
+		$(".dltUsr").on("click", function(e){
+			e.preventDefault();
+		});
+
+		$("body").on("click", ".dctvUsr", function(e){
+			e.preventDefault();
+			user = $(this).parent().parent().attr("data-usr");
+			var data = { user: user};
+			$.ajax({
+				type: "POST",
+				url: "/log/BlockUserAccount",
+				dataType: "json",
+				contentType: "application/json; charset-UTF8",
+				data: JSON.stringify(data),
+				success: function(resp){
+
+					if(resp == 1)
+						alert("Cuenta de usuario bloqueada exitosamente.")
+					else
+						alert("No cuentas con privilegios para realizar esta operacion.")
+
+				},error: function(xhr, status, error){
+					console.log(xhr);
+					alert(error);
+				}
+			});
+		})
 
 		function GetUsersCaseTypes(usr,tbl){
 			var usr = usr;

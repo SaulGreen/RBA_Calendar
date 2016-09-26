@@ -1,6 +1,7 @@
 class AppointmentController < ApplicationController
 	before_action :authenticate_user!
 	before_action :GetUserData
+  #before_action :CheckIfUserIsActive
 	before_action :GetAbogadosCasos
 
 	def index
@@ -25,7 +26,7 @@ class AppointmentController < ApplicationController
               format.json { render :text => appCheck.to_json }
           end
       else 
-          Appointment.where("id = ?", params[:id]).update_all(:fecha => params[:fecha], :hora => params[:hora], :user_id => params[:user_id], :last_edited_by => current_user.id)
+          Appointment.where("id = ?", params[:id]).update_all(:fecha => params[:fecha], :hora => params[:hora], :user_id => params[:user_id], :last_edited_by_id => current_user.id)
           #@appointment.update_all(:fecha => params[:fecha], :hora => params[:hora], :user_id => params[:user_id], :last_edited_by => current_user.id)
 
           appmnt = Appointment.where("id = ?", params[:id]).first
@@ -69,8 +70,8 @@ class AppointmentController < ApplicationController
 
   def nuevaCita
       @appointment = Appointment.new(appointment_params);
-      @appointment.created_by = current_user.id
-      @appointment.last_edited_by = current_user.id
+      @appointment.created_by_id = current_user.id
+      @appointment.last_edited_by_id = current_user.id
 
       @cliente = Client.where(:id => :client_id)
       clienteDst = Client.where(:id => :client_id)
@@ -124,7 +125,7 @@ class AppointmentController < ApplicationController
   def cancelAppointment
       @appointment = Appointment.find(params[:id])
       @appointment.update_attribute(:status_app, 0)
-      @appointment.last_edited_by = current_user.id
+      @appointment.last_edited_by_id = current_user.id
       appmnt = Appointment.where("id = ?", params[:id]).first
       
       user = appmnt.user_id
@@ -140,7 +141,7 @@ class AppointmentController < ApplicationController
           format.json { render :text => @appointment.to_json }
       end
   end
-
+''
   def LogAppointment(user,action,client,fecha,hora,lawyer)
 
       request.remote_ip
@@ -165,7 +166,7 @@ class AppointmentController < ApplicationController
 	end
 
   def GetAppointments
-      if current_user.role_id == 4 || current_user.role_id == 2
+      if current_user.role_id != 3
           @weekAppointments = Appointment.joins(:client).joins(:user).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id","nombre, apaterno, color_id", "user_id, client_id, tipocaso, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance, created_by_id, last_edited_by_id")
           #@weekAppointments = Appointment.joins(:client).joins(:lawyer).joins(:creator).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id","nombre, apaterno, color_id", "user_id, client_id, tipocaso, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance")
           #@weekAppointments = Appointment.joins(:client).joins(:user).includes(:created_by).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id, client_id, nombre, apaterno, color_id","created_by_id")
@@ -255,14 +256,20 @@ class AppointmentController < ApplicationController
   end
 
   def CheckAnnouncement
-      hora = params[:hora]      
-      @avisos = Announcement.where("id_user = ? AND fecha = ? AND horainicio <= ? AND horafinal > ?",params[:user],params[:fecha],params[:hora].to_time,params[:hora].to_time).all
+      hora = params[:hora]
+      @avisos = Announcement.where("id_user = ? AND fecha = ? AND completo = ?",params[:user],params[:fecha],true).all 
+
+      if @avisos.size < 1     
+          @avisos = Announcement.where("id_user = ? AND fecha = ? AND horainicio <= ? AND horafinal > ?",params[:user],params[:fecha],params[:hora].to_time,params[:hora].to_time).all
+      else
+      end
+
       @vacation = Vacation.where("user_id = ? AND startdate <= ? AND enddate >= ?",params[:user],params[:fecha],params[:fecha]).all
+      ausencias = { avisos: @avisos, vacaciones: @vacation };
 
       if @avisos.size > 0 || @vacation.size > 0
-          aviso = "El usuario seleccionado no se encuentra disponible en la fecha y hora seleccinada."
           respond_to do |format|
-              format.json { render :text => aviso.to_json }
+              format.json { render :text => ausencias.to_json }
           end
       else
         aviso = nil

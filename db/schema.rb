@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20160920222548) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "announcements", force: :cascade do |t|
+  create_table "announcements", force: :cascade do |t| 
     t.string   "titulo"
     t.text     "comentario"
     t.date     "fecha"

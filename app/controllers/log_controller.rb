@@ -1,4 +1,13 @@
 class LogController < ApplicationController
+	#before_action :CheckIfUserIsActive
+
+	# def CheckIfUserIsActive
+	# 	if current_user.status != 2
+	# 		redirect_to root_path
+	# 	else
+	# 		redirect_to new_user_session_path, :notice => "Tu cuenta no esta activa, verificalo con el personal de recursos humanos."
+	# 	end
+	# end
 	
 	def GetUserInformation
 		if current_user.role_id == 3 || current_user.role_id == 4
@@ -139,10 +148,11 @@ class LogController < ApplicationController
 	def SetAnnouncement
 		horaOut = params[:horainicio]
 		horaIn = params[:horafinal]
+		allDayLong = params[:allDay]
 		# horaOut = horaOut.strftime('%r')
 		# horaIn = horaIn.strftime('%r')
 
-		@announce = Announcement.create(:titulo => params[:titulo], :fecha => params[:fecha], :comentario => params[:comentario], :horainicio => horaOut, :horafinal => horaIn, :id_user => current_user.id)
+		@announce = Announcement.create(:titulo => params[:titulo], :fecha => params[:fecha], :comentario => params[:comentario], :horainicio => horaOut, :horafinal => horaIn, :completo => allDayLong, :id_user => current_user.id)
 
 		if @announce.save
 			respond_to do |format|
@@ -151,6 +161,21 @@ class LogController < ApplicationController
 		else
 			respond_to do |format|
 				format.json { render json: @announce.errors, status: :unprocesable_entity }
+			end
+		end
+	end
+
+	def GetUserAnnouncements
+		avisos = Announcement.where(:id_user => current_user.id)
+
+		if avisos.size > 0
+			respond_to do |format|
+				format.json { render :text => avisos.to_json }
+			end
+		else
+			avisos = nil
+			respond_to do |format|
+				format.json { render :text => avisos.to_json }
 			end
 		end
 	end
@@ -172,6 +197,50 @@ class LogController < ApplicationController
 			end
 		end
 
+	end
+
+	def ActivateUserAccount
+		activo = 0
+		if current_user.role_id == 1 || current_user.role_id == 2
+			if params[:user] != nil || params[:user] != ""
+				user = User.where(:id => params[:user]).update_all(:status => 2)
+				activo = 1
+
+				respond_to do |format|
+					format.json { render :text => activo.to_json }
+				end
+			else
+				respond_to do |format|
+					format.json { render :text => activo.to_json }
+				end
+			end
+		else
+			respond_to do |format|
+				format.json { render :text => activo.to_json }
+			end
+		end
+	end
+
+	def BlockUserAccount
+		activo = 0
+		if current_user.role_id == 1 || current_user.role_id == 2
+			if params[:user] != nil || params[:user] != ""
+				user = User.where(:id => params[:user]).update_all(:status => 1)
+				activo = 1
+
+				respond_to do |format|
+					format.json { render :text => activo.to_json }
+				end
+			else
+				respond_to do |format|
+					format.json { render :text => activo.to_json }
+				end
+			end
+		else
+			respond_to do |format|
+				format.json { render :text => activo.to_json }
+			end
+		end
 	end
 
 	def GetUsersByStatus

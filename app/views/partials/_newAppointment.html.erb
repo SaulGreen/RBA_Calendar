@@ -128,6 +128,16 @@
     </div>
 </div>
 
+<div class="modal-announce" style="z-index:1002;" hidden>
+    <div class="x-cross"><i class="fa fa-times-circle fa-2x"></i></div>
+    <div class="announceBox">
+        <h4>Aviso del sistema</h4>
+        <hr />
+        <h5 id="txtAnnounce"></h5>
+        <hr />
+    </div> 
+</div>
+
 <script>
 
     jQuery.fn.center = function(){
@@ -342,9 +352,37 @@
     $("#slctAbogado").on("change", function(){
         var sltdLyr = $("#slctAbogado option:selected").val()
         var usrName = $("#slctAbogado option:selected").text();
+        var modalAnnounce = $(".modal-announce")
+        dayNum = parseInt(dayNum); 
 
-        var data = { user: sltdLyr, fecha: fechaCita, hora: "2000-01-01 " + horaCita }
-        //alert(horaCita)
+        CheckAnnouncements(sltdLyr,usrName,modalAnnounce);
+        if(sltdLyr == 16){
+            CheckAnnouncements(sltdLyr, usrName, modalAnnounce);
+            if(dayNum != 5 && dayNum != 6){
+                //CheckAnnouncements(sltdLyr, usrName, modalAnnounce);
+                aviso = "<p style='text-align:left;'><b>Nota: " + usrName + "</b> acude unicamente Viernes y Sabado a la oficina. <br><br>- Seleccione otro asesor o cierre este anuncio para continuar.</p>";
+                // $("#txtAnnounce").text("").append(aviso);
+                // modalAnnounce.fadeIn(500);
+                // capaModalAppear(modalAnnounce);
+                SystemAnnounce(aviso,modalAnnounce);
+            }
+            
+        }else if(sltdLyr == 34){
+            //CheckAnnouncements(sltdLyr, usrName, modalAnnounce)
+            if(dayNum != 6){
+                ///CheckAnnouncements(sltdLyr, usrName, modalAnnounce);
+                aviso = "<p style='text-align:left;'><b>Nota: " + usrName + "</b> acude unicamente Sabados a la oficina. <br><br>- Seleccione otro asesor o cierre este anuncio para continuar.</p>";
+                // $("#txtAnnounce").text("").append(aviso);
+                // modalAnnounce.fadeIn(500);
+                // capaModalAppear(modalAnnounce);
+                SystemAnnounce(aviso,modalAnnounce);
+            }
+        }
+    });
+    
+    function CheckAnnouncements(user, usrName, modal){
+        var data = { user: user, fecha: fechaCita, hora: "2000-01-01 " + horaCita }
+
         $.ajax({
             type: "POST",
             url: "/appointment/CheckAnnouncement",
@@ -352,20 +390,41 @@
             contentType: "application/json; charset-utf8",
             data: JSON.stringify(data),
             success: function(resp){
-                console.log(resp)
+                //console.log(resp)
                 if(resp != null){
-                    alert("El usuario " + usrName + " no estara disponible a la fecha y hora seleccionada.");
-                    $("#slctAbogado").prop("selectedIndex",0);
-                }else{
+                    avisos = resp.avisos;
+                    vacaciones = resp.vacaciones;
 
+                    if(avisos.length > 0){
+                        $(avisos).each(function(i,e){
+                            //console.log(e)
+                            if(e.completo == true)
+                                aviso = "<p style='text-align:left;'>Nota: " + usrName + " no estara disponible durante todo el dia. <br><br><b style='text-align:left;'>" + usrName + ": </b> " + e.comentario + "</p>";
+                            else    
+                                aviso = "<p style='text-align:left;'>Nota: " + usrName + " no esta disponible de " + moment(e.horainicio).format("HH:mm") + " a " + moment(e.horafinal).format("HH:mm") + ".<br><br><b style='text-align:left;'>" + usrName + ": </b> " + e.comentario + "</p>";
+                            SystemAnnounce(aviso,modal)
+                        });
+                    }else if(vacaciones.length > 0){
+                        $(vacaciones).each(function(i,e){
+                            //console.log(e.startdate + " --- " + e.enddate)
+                            aviso = "<p style='text-align:left;'>Nota: " + usrName + " estara ausente del dia " + moment(e.startdate).format("DD-MM-YYYY") + " al dia " +  moment(e.enddate).format("DD-MM-YYYY") + ". <br><br><b style='text-align:left;'>" + usrName + ":</b> " + e.comment + "</p>";
+                            SystemAnnounce(aviso,modal)
+                        });
+                    }
                 }
             }, error: function(xhr, status, error){
                 console.log(xhr);
                 alert(error)
             }
-        })
-        
-    });
+        });
+    }
+
+    function SystemAnnounce(aviso,modal){
+        $("#txtAnnounce").text("").append(aviso);
+        modal.fadeIn(500);
+        capaModalAppear(modal);
+        //$("#slctAbogado").prop("selectedIndex",0);
+    }
 
     $("#slctAbogado").addClass("select Abogado").append("<option> Seleccione.. </option>")
     $("#slctTipoCita").on("change", function(){
@@ -403,7 +462,10 @@
     });
 
     function capaModalAppear(modalAppoint){
-          var capaModal = $("<div>").attr("id","capaModal");
+          var capaModal = $("<div>").attr("class","capaModal");
+          $(".capaModal").each(function(i,e){
+                $(e).remove();
+          })
 
           capaModal.css({
               opacity: 0.80,

@@ -35,6 +35,9 @@ Rails.application.routes.draw do
   post "log/GetUsersByStatus"
   post "log/GetUserInformation"
   post "log/SetAnnouncement"
+  post "log/ActivateUserAccount"
+  post "log/BlockUserAccount"
+  post "log/GetUserAnnouncements"
 
   #Temp
   get "log/colorList"

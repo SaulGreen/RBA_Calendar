@@ -1,7 +1,16 @@
 class DayController < ApplicationController
   	before_action :authenticate_user!
   	before_action :GetUserData
+    #before_action :CheckIfUserIsActive
     before_action :GetAbogadosCasos
+
+    # def CheckIfUserIsActive
+    #     if current_user.status != 2
+    #         redirect_to new_user_session_path, :notice => "Tu cuenta no esta activa, verificalo con el personal de recursos humanos."     
+    #     else
+    #         redirect_to GetAppointments_appointment_index_path
+    #     end
+    # end
 	
   	def index
       if current_user.role_id != 4
