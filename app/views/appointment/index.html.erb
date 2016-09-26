@@ -267,7 +267,7 @@
                           $(resp).each(function(i,e){
                               var hora = moment(e.hora).format("HH:mm:ss");
                               var fecha = moment(e.fecha).format("YYYY-MM-DD");
-                              var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + fecha + "' data-h='" + hora + "'><h3 class='cFullName'>" + toTitleCase(e.nombreclt) + " " + toTitleCase(e.apaternoclt) + "</h3><p class='cCaseType'>" + e.tipocaso + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
+                              var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + moment(fecha).format("DD-MM-YYYY") + "' data-h='" + hora + "'><h3 class='cFullName'>" + toTitleCase(e.nombreclt) + " " + toTitleCase(e.apaternoclt) + "</h3><p class='cNumCaso' hidden>" + e.numcaso + "</p><p class='cCaseType'>" + e.tipocaso + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
 
                               $(arrayColors).each(function(idx,elem){
                                   if(elem.auxId == e.color_id)
@@ -283,7 +283,7 @@
                               }else{
                                   var appHour = $('[data-hour="' + hora + '"]');
                                   var td = $(appHour).find('[data-fecha="' + fecha + '"]');
-                                  var tablita = "<tr class='childtdcitas'><td class='tdAppLaw2' style='background-color:" + aux + "'><p class='recCltName' data-clt='" + e.id + "'>" + toTitleCase(e.nombreclt) + " " + toTitleCase(e.apaternoclt) + "</p><p class='cTypeLaw'><span class='recCltCase'>" + e.tipocaso + "</span> - <span class='recCltLawyer' data-lyr='" + e.user_id + "'>" + FisrtNameFix(toTitleCase(e.nombre)) + " " + toTitleCase(e.apaterno) + "</span></p><p class='recCltMail' hidden>" + e.emailclt + "</p><p class='recCltTel' hidden>" + e.telefonoclt + "</p><p hidden><span class='recCltComment'>" + e.comentario + "</span><span class='recCltDate'>" + fecha + "</span><span class='recCltHour' hidden>" + hora +"</span></p><span class='recCltAttnd' hidden>" + e.attendance + "</span></td></tr>";
+                                  var tablita = "<tr class='childtdcitas'><td class='tdAppLaw2' style='background-color:" + aux + "'><p class='recCltName' data-clt='" + e.id + "'>" + toTitleCase(e.nombreclt) + " " + toTitleCase(e.apaternoclt) + "</p><p><span class='recCltNumCaso' hidden>" + e.numcaso + "</span></p><p class='cTypeLaw'><span class='recCltCase'>" + e.tipocaso + "</span> - <span class='recCltLawyer' data-lyr='" + e.user_id + "'>" + FisrtNameFix(toTitleCase(e.nombre)) + " " + toTitleCase(e.apaterno) + "</span></p><p class='recCltMail' hidden>" + e.emailclt + "</p><p class='recCltTel' hidden>" + e.telefonoclt + "</p><p hidden><span class='recCltComment'>" + e.comentario + "</span><span class='recCltDate'>" + moment(fecha).format("DD-MM-YYYY") + "</span><span class='recCltHour' hidden>" + hora +"</span></p><span class='recCltAttnd' hidden>" + e.attendance + "</span></td></tr>";
                                   $(td).find(".tbdAddApp").append(tablita);
                               }
 
@@ -422,6 +422,7 @@
           var modalAppoint = $(".modal-body");
 
           modalAppoint.find(".cltName").text(boton.siblings(".cFullName").text());
+          modalAppoint.find(".cltNumCaso").text(boton.siblings(".cNumCaso").text());
           modalAppoint.find(".cltDate").text(boton.parent().data("f"));
           modalAppoint.find(".cltHora").text(boton.parent().data("h"));
           modalAppoint.find(".cltCase").text(boton.siblings(".cCaseType").text());
@@ -433,8 +434,7 @@
           if(boton.siblings(".cLawyer").text() == "")
               modalAppoint.find(".cltlawyer").text($(".dropbtn").text());
 
-          modalAppoint.fadeIn(500)
-
+          modalAppoint.fadeIn(500);
           capaModalAppear(modalAppoint);
       });
 

@@ -51,13 +51,14 @@
     </div>
 </div>
 
-<div class="modal-body" hidden="hidden">
+<div class="modal-body" hidden="">
     <div class="x-cross"><i class="fa fa-times-circle fa-2x"></i></div>
     <div class="cltData-form">
         <div class="appInfo">
             <h3>Información de la cita.</h3>
             <hr>
             <p><b>Nombre del cliente:   </b><span class="cltName"></span></p>
+            <p><b>Num. de caso: </b><span class="cltNumCaso"></span></p>
             <p><b>Fecha:  </b><span class="cltDate"></span> <b>Hora:   </b><span class="cltHora"></span></p>
             <p><b>Tipo de caso:   </b><span class="cltCase"></span></p>
             <p><b>Teléfono:   </b><span class="cltPhone"></span> <b>Correo:   </b><span class="cltEmail"></span></p>
@@ -273,6 +274,7 @@
         var modalAppoint = $(".modal-body");
 
         modalAppoint.find(".cltName").text(cita.find(".recCltName").text());
+        modalAppoint.find(".cltNumCaso").text(cita.find(".recCltNumCaso").text());
         modalAppoint.find(".cltDate").text(cita.find(".recCltDate").text());
         modalAppoint.find(".cltHora").text(cita.find(".recCltHour").text());
         modalAppoint.find(".cltCase").text(cita.find(".recCltCase").text());
