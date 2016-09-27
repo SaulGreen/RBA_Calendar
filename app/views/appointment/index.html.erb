@@ -267,7 +267,7 @@
                           $(resp).each(function(i,e){
                               var hora = moment(e.hora).format("HH:mm:ss");
                               var fecha = moment(e.fecha).format("YYYY-MM-DD");
-                              var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + moment(fecha).format("DD-MM-YYYY") + "' data-h='" + hora + "'><h3 class='cFullName'>" + toTitleCase(e.nombreclt) + " " + toTitleCase(e.apaternoclt) + "</h3><p class='cNumCaso' hidden>" + e.numcaso + "</p><p class='cCaseType'>" + e.tipocaso + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
+                              var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + moment(fecha).format("DD-MM-YYYY") + "' data-h='" + hora + "'><h3 class='cFullName'>" + toTitleCase(e.nombreclt) + " " + toTitleCase(e.apaternoclt) + " " + toTitleCase(e.amaternoclt) + "</h3><p class='cNumCaso' hidden>" + e.numcaso + "</p><p class='cCaseType'>" + e.tipocaso + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
 
                               $(arrayColors).each(function(idx,elem){
                                   if(elem.auxId == e.color_id)
@@ -283,7 +283,7 @@
                               }else{
                                   var appHour = $('[data-hour="' + hora + '"]');
                                   var td = $(appHour).find('[data-fecha="' + fecha + '"]');
-                                  var tablita = "<tr class='childtdcitas'><td class='tdAppLaw2' style='background-color:" + aux + "'><p class='recCltName' data-clt='" + e.id + "'>" + toTitleCase(e.nombreclt) + " " + toTitleCase(e.apaternoclt) + "</p><p><span class='recCltNumCaso' hidden>" + e.numcaso + "</span></p><p class='cTypeLaw'><span class='recCltCase'>" + e.tipocaso + "</span> - <span class='recCltLawyer' data-lyr='" + e.user_id + "'>" + FisrtNameFix(toTitleCase(e.nombre)) + " " + toTitleCase(e.apaterno) + "</span></p><p class='recCltMail' hidden>" + e.emailclt + "</p><p class='recCltTel' hidden>" + e.telefonoclt + "</p><p hidden><span class='recCltComment'>" + e.comentario + "</span><span class='recCltDate'>" + moment(fecha).format("DD-MM-YYYY") + "</span><span class='recCltHour' hidden>" + hora +"</span></p><span class='recCltAttnd' hidden>" + e.attendance + "</span></td></tr>";
+                                  var tablita = "<tr class='childtdcitas'><td class='tdAppLaw2' style='background-color:" + aux + "'><p class='recCltName' data-clt='" + e.id + "'> <span class='clName'>" + toTitleCase(e.nombreclt) + "</span> <span class='clApa'> " + toTitleCase(e.apaternoclt) + "</span><span class='clAma' hidden> " + e.amaternoclt + "</span></p><p><span class='recCltNumCaso' hidden>" + e.numcaso + "</span></p><p class='cTypeLaw'><span class='recCltCase'>" + e.tipocaso + "</span> - <span class='recCltLawyer' data-lyr='" + e.user_id + "'>" + FisrtNameFix(toTitleCase(e.nombre)) + " " + toTitleCase(e.apaterno) + "</span></p><p class='recCltMail' hidden>" + e.emailclt + "</p><p class='recCltTel' hidden>" + e.telefonoclt + "</p><p hidden><span class='recCltComment'>" + e.comentario + "</span><span class='recCltDate'>" + moment(fecha).format("DD-MM-YYYY") + "</span><span class='recCltHour' hidden>" + hora +"</span></p><span class='recCltAttnd' hidden>" + e.attendance + "</span></td></tr>";
                                   $(td).find(".tbdAddApp").append(tablita);
                               }
 
@@ -354,13 +354,21 @@
       $("body").on("click", "#btnEditConfirm", function(){
           var editCita = $(".modal-body-edit");
           var app = editCita.find(".appInfo-edit").attr("data-app");
+          var nName = $(".cltNameNew").val();
+          var nApa = $.trim($(".cltApaNew").val());
+          var nAma = $.trim($(".cltAmaNew").val());
+          var n_Caso = $(".cltCasoNew ").val();
+          var nTel = $("#editTel").val();
+          var nMail = $(".cltMailNew").val();
+          var nComnt = $(".editComntTxt").val();
 
           var originalDate = editCita.find(".nwDate").val();
           //var newDate = moment(originalDate).subtract(1,'months').format("YYYY-MM-DD");
           var newDate = moment(originalDate).format("YYYY-MM-DD");
           var newHour = moment("2000-01-01 " + editCita.find("#slctHour-Edit").val()).format("YYYY-MM-DD HH:mm:ss");
+          var newCtype = editCita.find("#slctTipoCita-Edit").val();
           var newLayer = editCita.find("#slctEmp-Edit").val();
-          var data = { id: app, fecha: newDate, hora: newHour, user_id: newLayer }
+          var data = { id: app, fecha: newDate, hora: newHour, user_id: newLayer, nName: nName, nApa: nApa, nAma: nAma, n_Caso: n_Caso, nTel: nTel, nMail: nMail, nComnt: nComnt, newCtype: newCtype }
 
           if(confirm){
               $.ajax({
@@ -378,7 +386,10 @@
 
                           editCita.fadeOut(500);
                           $("#capaModal").fadeOut(500).remove();
+                          $("#slctTipoCita-Edit").prop("selectedIndex",0);
                           $("#slctEmp-Edit").prop("selectedIndex",0);
+                          $(".editComntTxt").val("");
+                          $(".appEditField").val("")
                       }
                   }, error: function(xhr,status,error){
                       console.log(xhr);

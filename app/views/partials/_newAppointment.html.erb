@@ -51,7 +51,7 @@
     </div>
 </div>
 
-<div class="modal-body" hidden="">
+<div class="modal-body" hidden="hidden">
     <div class="x-cross"><i class="fa fa-times-circle fa-2x"></i></div>
     <div class="cltData-form">
         <div class="appInfo">
@@ -69,13 +69,14 @@
     </div>
 </div>
 
-<div class="modal-body-edit" hidden="hidden">
+<div class="modal-body-edit" hidden>
     <div class="x-cross"><i class="fa fa-times-circle fa-2x"></i></div>
     <div class="cltData-form-edit">
         <div class="appInfo-edit" data-app="">
-            <h3>Información de la cita.</h3>
+            <h3>Editar cita.</h3>
             <hr>
-            <p><b>Nombre del cliente:   </b><span class="cltName"></span></p>
+            <p><b>Nombre(s):</b><span class="cltName"><input type="text" class="appEditField cltNameNew"></span> <b>A. Paterno:</b><span class="cltApaterno"><input type="text" class="appEditField cltApaNew"></span> <b>A. Materno:</b><span class="cltAmaterno"><input type="text" class="appEditField cltAmaNew"></span></p>
+            <p><b>Num. Caso:</b><span class="cltNumCaso"><input type="text" class="cltCasoNew appEditField"></span></p>
             <p><b>Fecha:  </b><input type="date" class="nwDate" ><span class="cltDate"></span> <b>Hora: </b>
               <select id="slctHour-Edit">
                   <option value="10:30:00">10:30</option>
@@ -97,12 +98,20 @@
                   <option value="18:30:00">18:30</option>
               </select>
             </p>
-            <p><b>Tipo de caso:  </b><span class="cltCase"></span></p>
-            <p><b>Teléfono:  </b><span class="cltPhone"><input type="text"></span> <b>Correo:   </b><span class="cltEmail"><input type="text"></span></p>
-            <hr>
-            <p><b>Comentario:   </b><span class="cltComment"></span></p>
-            <p><b>Asesor: </b>
+            <p><b>Tipo de caso:</b><!-- <span class="cltCase"></span> -->
+                <%= select_tag "slctTipoCita-Edit", options_from_collection_for_select(@tipocasos, "id", "tipocaso"), class: "select", prompt: "Seleccione.." %>
+                <b>Asesor:</b>
                 <%= select_tag "slctEmp-Edit", options_from_collection_for_select(@abogados, "id", "full_name"), class: "select Abogado", prompt: "Seleccione.." %>
+            </p>
+            <p>
+            </p>
+            <p><b>Teléfono:</b><span class="cltPhone"><input id="editTel" type="text" class="cltPhoneNew appEditField" style="width:150px !important;"></span> <b>Correo:</b><span class="cltEmail"><input type="text" class="cltMailNew appEditField" style="width:200px !important;"></span></p>
+            <hr>
+            <p>
+                <b>Comentario:</b><br>
+                <span class="cltComment">
+                    <textarea class="editComntTxt"></textarea>
+                </span>
             </p>
             <a class="buttons" id="btnEditConfirm">Guardar</a>
         </div>
@@ -164,7 +173,7 @@
         }
     })
 
-    $("#telefono").keypress(function (e) {
+    $("#telefono, #editTel").keypress(function (e) {
          //if the letter is not digit then display error and don't type anything
          if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
             //display error message
@@ -286,17 +295,24 @@
         modalAppoint.fadeIn(500);
         capaModalAppear(modalAppoint)
     });
-
+ 
     $("#btnEdit").on("click", function(){
         var cita = $(".appSelected");
         var modalEdition = $(".modal-body-edit");
 
-        modalEdition.find(".cltName").text(cita.find(".recCltName").text());
-        modalEdition.find(".cltCase").text(cita.find(".recCltCase").text());
-        modalEdition.find(".cltPhone").text(cita.find(".recCltTel").text());
-        modalEdition.find(".cltEmail").text(cita.find(".recCltMail").text());
-        modalEdition.find(".cltComment").text(cita.find(".recCltComment").text());
+        modalEdition.find(".cltNameNew").val(cita.find(".clName").text());
+        modalEdition.find(".cltApaNew").val(cita.find(".clApa").text());
+        modalEdition.find(".cltAmaNew").val(cita.find(".clAma").text());
+        modalEdition.find(".cltCasoNew").val(cita.find(".recCltNumCaso").text());
+        //modalEdition.find(".cltCase").text(cita.find(".recCltCase").text());
+        modalEdition.find(".cltPhoneNew").val(cita.find(".recCltTel").text());
+        modalEdition.find(".cltMailNew").val(cita.find(".recCltMail").text());
+        modalEdition.find(".editComntTxt").val(cita.find(".recCltComment").text());
         modalEdition.find(".appInfo-edit").attr("data-app",cita.find(".recCltName").attr("data-clt"));
+
+        // $(".appEditField").each(function(i,e){
+        //     $(e).text().replace(/ /g,'');
+        // });
 
         modalEdition.fadeIn(500);
         capaModalAppear(modalEdition);
@@ -351,7 +367,7 @@
         })
     });
 
-    $("#slctAbogado").on("change", function(){
+    $("#slctAbogado, #slctEmp-Edit").on("change", function(){
         var sltdLyr = $("#slctAbogado option:selected").val()
         var usrName = $("#slctAbogado option:selected").text();
         var modalAnnounce = $(".modal-announce")
