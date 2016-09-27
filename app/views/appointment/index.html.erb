@@ -572,6 +572,13 @@
               dayNum = $(this).attr("data-day");
               fechaCita = $(this).attr("data-fecha");
               horaCita = $(this).parent(".trHour").attr("data-hour");
+
+              if(horaCita == "13:30:00" || horaCita == "14:00:00"){
+                  var modalAnnounce = $(".modal-announce")
+                  aviso = "<p>El horario seleccionado " + horaCita + " es dentro de la hora de comida.<br><br> -Seleccione otro horario o cierre este anuncio para continuar</p>"
+                  SystemAnnounce(aviso,modalAnnounce);
+              }
+
           }
       });
 
