@@ -354,13 +354,13 @@
       $("body").on("click", "#btnEditConfirm", function(){
           var editCita = $(".modal-body-edit");
           var app = editCita.find(".appInfo-edit").attr("data-app");
-          var nName = $(".cltNameNew").val();
-          var nApa = $.trim($(".cltApaNew").val());
-          var nAma = $.trim($(".cltAmaNew").val());
-          var n_Caso = $(".cltCasoNew ").val();
-          var nTel = $("#editTel").val();
-          var nMail = $(".cltMailNew").val();
-          var nComnt = $(".editComntTxt").val();
+          var nName = $(".cltNameNew").val().trim();
+          var nApa = $(".cltApaNew").val().trim();
+          var nAma = $(".cltAmaNew").val().trim();
+          var n_Caso = $(".cltCasoNew ").val().trim();
+          var nTel = $("#editTel").val().trim();
+          var nMail = $(".cltMailNew").val().trim();
+          var nComnt = $(".editComntTxt").val().trim();
 
           var originalDate = editCita.find(".nwDate").val();
           //var newDate = moment(originalDate).subtract(1,'months').format("YYYY-MM-DD");
@@ -370,7 +370,12 @@
           var newLayer = editCita.find("#slctEmp-Edit").val();
           var data = { id: app, fecha: newDate, hora: newHour, user_id: newLayer, nName: nName, nApa: nApa, nAma: nAma, n_Caso: n_Caso, nTel: nTel, nMail: nMail, nComnt: nComnt, newCtype: newCtype }
 
-          if(confirm){
+          console.log(data)
+          if(newDate == "Invalid date" || newDate == null)
+              alert("Fecha invalida seleccione una correcta")
+          else if(nName == "" || nApa == "" || newCtype == "" || newLayer == ""){
+              alert("Verifica los campos \n-Nombre(s)\n-Apellido paterno\n-Tipo de caso-\n-Asesor")
+          }else{
               $.ajax({
                   type:"POST",
                   url: "/appointment/update",
@@ -390,6 +395,8 @@
                           $("#slctEmp-Edit").prop("selectedIndex",0);
                           $(".editComntTxt").val("");
                           $(".appEditField").val("")
+                          $(".nwDate").val("");
+                          $("#slctHour-Edit").prop("selectedIndex",0);
                       }
                   }, error: function(xhr,status,error){
                       console.log(xhr);

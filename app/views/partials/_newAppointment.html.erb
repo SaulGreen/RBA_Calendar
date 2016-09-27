@@ -309,6 +309,8 @@
         modalEdition.find(".cltMailNew").val(cita.find(".recCltMail").text());
         modalEdition.find(".editComntTxt").val(cita.find(".recCltComment").text());
         modalEdition.find(".appInfo-edit").attr("data-app",cita.find(".recCltName").attr("data-clt"));
+        $("#slctTipoCita-Edit").prop("selectedIndex",0);
+        $("#slctEmp-Edit").prop("selectedIndex",0);
 
         // $(".appEditField").each(function(i,e){
         //     $(e).text().replace(/ /g,'');
@@ -374,7 +376,7 @@
         dayNum = parseInt(dayNum); 
 
         CheckAnnouncements(sltdLyr,usrName,modalAnnounce);
-        if(sltdLyr == 16){
+        if(sltdLyr == 4){
             CheckAnnouncements(sltdLyr, usrName, modalAnnounce);
             if(dayNum != 5 && dayNum != 6){
                 //CheckAnnouncements(sltdLyr, usrName, modalAnnounce);
@@ -385,7 +387,7 @@
                 SystemAnnounce(aviso,modalAnnounce);
             }
             
-        }else if(sltdLyr == 34){
+        }else if(sltdLyr == 7){
             //CheckAnnouncements(sltdLyr, usrName, modalAnnounce)
             if(dayNum != 6){
                 ///CheckAnnouncements(sltdLyr, usrName, modalAnnounce);
