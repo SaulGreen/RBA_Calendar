@@ -845,8 +845,13 @@ ul li a:hover {
     font-size: 15px;
 }
 
-.modal-body-edit{
+.modal-body-edit, .modal-body-clts{
     top:23% !important;
+}
+
+.modal-body-clts{
+    height: 415px;
+    overflow: scroll !important;
 }
 
 .appEditField{
@@ -2838,12 +2843,12 @@ ul li a:hover {
     text-decoration: none;
 }
 
-.modal-body, .modal-body-edit, .modal-attend{
+.modal-body, .modal-body-edit, .modal-attend, .modal-body-clts{
     border-radius: 4px;
     position: fixed;
     background: #FFFFFF;
     box-shadow: 0px 0px 10px #D2D6D8;
-    padding: 30px 15px;
+    padding: 15px 15px;
     width: auto;
     height: auto;
     width:575px;
@@ -2853,8 +2858,13 @@ ul li a:hover {
     text-align: center; 
     font-size: 15px;
 }
-.modal-body-edit{
+.modal-body-edit, .modal-body-clts, .modal-body{
     top:18% !important;
+}
+
+.modal-body-clts{
+    height: 415px;
+    overflow: scroll !important;
 }
 
 .appAttend > h4 {
@@ -2863,12 +2873,21 @@ ul li a:hover {
 
 .appInfo > p, .appInfo-edit > h3{
     margin-top: 0px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .appInfo > p, .appInfo-edit > p{
     text-align: justify;
     padding: 0;
+}
+
+.spteApp{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#btnEditConfirm{
+    margin-top: 0px;
 }
 
 .x-cross{

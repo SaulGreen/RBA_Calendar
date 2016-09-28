@@ -76,7 +76,7 @@
                                 $(resp).each(function(i,e){
                                     fecha = moment(e.fecha).format("DD-MMM-YYYY");
                                     hora = moment(e.hora).format("HH:mm:ss a");
-                                    tr += "<tr><td>" + e.nombreclt + " " + e.apaternoclt + "</td><td>" + e.telefonoclt + "</td><td>" + fecha + "</td><td>" + hora + "</td></tr>";
+                                    tr += "<tr><td>" + toTitleCase(e.nombreclt) + " " + toTitleCase(e.apaternoclt) + "</td><td>" + e.telefonoclt + "</td><td>" + fecha + "</td><td>" + hora + "</td></tr>";
                                 });
                                 $("#tblCltsLst").append(tr);
 
