@@ -535,12 +535,17 @@
           });
 
           var day = parseInt(lstDay.substr(8,2));
-          var wkSwtch = false  
-          if(day ==  daysThisMonth){
-              currentMonth = currentMonth + 1;
+          if(daysTemp[0] > daysTemp[6])
+              wkSwtch = false;  
+          else{
+              wkSwtch = true;
+              if(day ==  daysThisMonth){
+                  currentMonth = currentMonth + 1;
+              }
           }
+          
 
-          WeeklyAppointments(currentMonth, year, true);
+          WeeklyAppointments(currentMonth, year, wkSwtch);
           getWeekAppointments();
           CheckVacationsPeriod (usrRol,$(".tdDayApp"))
 
@@ -604,23 +609,47 @@
           /*if(dayNumbers[0] > dayNumbers[6])
             wkSwtch = false*/
 
+          // if(wkSwtch == false){
+          //     var dsPst = [], dsNew = [], crtMnt, countPast = 0;
+          //     for(var i = 0; i < dayNumbers.length; i++){
+          //         if(parseInt(dayNumbers[i]) > (daysMonth - 7)){
+          //             dsPst[i] = dayNumbers[i];
+          //             countPast++;
+          //         }else
+          //             dsNew[i] = dayNumbers[i];
+          //     }
+          //     if(dsPst.length > 0)
+          //         currentMonth = currentMonth - 1;
+          // }
+
           if(wkSwtch == false){
-              var dsPst = [], dsNew = [], crtMnt;;
+              var dsCurrent = [], dsNew = [], crtMnt, countCurrent = 0;
               for(var i = 0; i < dayNumbers.length; i++){
-                  if(parseInt(dayNumbers[i]) > 20)
-                      dsPst[i] = dayNumbers[i];
-                  else
+                  if(parseInt(dayNumbers[i]) > (daysMonth - 7)){
+                      dsCurrent[i] = dayNumbers[i];
+                      countCurrent++;
+                  }else
                       dsNew[i] = dayNumbers[i];
               }
-
-              for(var i = 0; i < dsPst.length; i ++){
-                  if(parseInt(dsPst[i]) > today){
-                      currentMonth = currentMonth - 1;
-                      crtMnt = true;
-                      break;
-                  }
-              }
           }
+
+          // if(wkSwtch == false){
+          //     var dsPst = [], dsNew = [], crtMnt;;
+          //     for(var i = 0; i < dayNumbers.length; i++){
+          //         if(parseInt(dayNumbers[i]) > 20)
+          //             dsPst[i] = dayNumbers[i];
+          //         else
+          //             dsNew[i] = dayNumbers[i];
+          //     }
+
+          //     for(var i = 0; i < dsPst.length; i ++){
+          //         if(parseInt(dsPst[i]) > today){
+          //             currentMonth = currentMonth - 1;
+          //             crtMnt = true;
+          //             break;
+          //         }
+          //     }
+          // }
 
           /*console.log(dayNumbers)
           console.log(dsPst)
@@ -647,6 +676,18 @@
               }else{
                   tdDiaHora += '<td class="tdcitas2 myPopover tdDayApp" data-day="' + (i + 1) + '" data-fecha="' + year + "-" + currentMonth + "-" + dayNumbers[i] + '"><table class="tblAppDay"><tbody class="tbdAddApp"></tbody></table></td>';
               }
+
+              if(countCurrent > 0){
+                  countCurrent--;
+                  if(countCurrent == 0){
+                      currentMonth = currentMonth + 1;
+                      countCurrent = null;
+                    }
+              }
+              // else if(countPast == 0){
+              //     currentMonth = currentMonth + 1;
+              //     countPast = null;
+              // }
           }
           
           var trHoraCita;
