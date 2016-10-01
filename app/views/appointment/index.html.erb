@@ -5,9 +5,11 @@
 <p hidden id="mainView">2</p>
 <div class="calendarioMain">
     <div class="rectup" style="background: <%= @colorDos %>;">
+        <div class="monthBefore">Mes</div>
         <div class="arr left" id="prevWeek"></div>
         <div class="nameMonth">Semanal</div>              
         <div class="arr right" id="nextWeek"></div>
+        <div class="monthAfter">Mes</div>
     </div>
     <div class="rectdw" style="background: <%= @colorUno %>;"> </div>
     <div class="rectdias" >
@@ -51,6 +53,7 @@
 
       var fstDay, lstDay;
       var daysPerMonth = [ 0, 31, totalFeb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      var monthNames = ["","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
       weekCalendar(trDays, daysPerMonth);
       WeeklyAppointments(currentMonth, year, true);
@@ -184,7 +187,7 @@
                               $(resp).each(function(i,e){
                                   var hora = moment(e.hora).format("HH:mm:ss");
                                   var fecha = moment(e.fecha).format("YYYY-MM-DD");
-                                  var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + fecha + "' data-h='" + hora + "'><h3 class='cFullName'>" + e.nombreclt + " " + e.apaternoclt + "</h3><p class='cCaseType'>" + e.tipocaso + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><p hidden class='cLawyer'>" + e.nombre + " " + e.apaterno + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
+                                  var boxCita = "<div class='activeAppoint' style='z-index:40;' data-f='" + fecha + "' data-h='" + hora + "'><h3 class='cFullName'>" + toTitleCase(e.nombreclt) + " " + toTitleCase(e.apaternoclt) + "</h3><p class='cCaseType'>" + e.tipocaso + "</p><p class='cTel'>" + e.telefonoclt + "</p><p hidden class='cEmail'>" + e.emailclt + "</p><p hidden='hidden' class='appComment'>" + e.comentario + "</p><p hidden class='cLawyer'>" + e.nombre + " " + e.apaterno + "</p><a id='aqui' class='btnComment'>Ver más</a></div>"
 
                                   console.log(e)
 
@@ -283,7 +286,7 @@
                               }else{
                                   var appHour = $('[data-hour="' + hora + '"]');
                                   var td = $(appHour).find('[data-fecha="' + fecha + '"]');
-                                  var tablita = "<tr class='childtdcitas'><td class='tdAppLaw2' style='background-color:" + aux + "'><p class='recCltName' data-clt='" + e.id + "'> <span class='clName'>" + toTitleCase(e.nombreclt) + "</span> <span class='clApa'> " + toTitleCase(e.apaternoclt) + "</span><span class='clAma' hidden> " + e.amaternoclt + "</span></p><p><span class='recCltNumCaso' hidden>" + e.numcaso + "</span></p><p class='cTypeLaw'><span class='recCltCase'>" + e.tipocaso + "</span> - <span class='recCltLawyer' data-lyr='" + e.user_id + "'>" + FisrtNameFix(toTitleCase(e.nombre)) + " " + toTitleCase(e.apaterno) + "</span></p><p class='recCltMail' hidden>" + e.emailclt + "</p><p class='recCltTel' hidden>" + e.telefonoclt + "</p><p hidden><span class='recCltComment'>" + e.comentario + "</span><span class='recCltDate'>" + moment(fecha).format("DD-MM-YYYY") + "</span><span class='recCltHour' hidden>" + hora +"</span></p><span class='recCltAttnd' hidden>" + e.attendance + "</span></td></tr>";
+                                  var tablita = "<tr class='childtdcitas'><td class='tdAppLaw2' style='background-color:" + aux + "'><p class='recCltName' data-clt='" + e.id + "'> <span class='clName'>" + toTitleCase(e.nombreclt) + "</span> <span class='clApa'> " + toTitleCase(e.apaternoclt) + "</span><span class='clAma' hidden> " + toTitleCase(e.amaternoclt) + "</span></p><p><span class='recCltNumCaso' hidden>" + e.numcaso + "</span></p><p class='cTypeLaw'><span class='recCltCase'>" + e.tipocaso + "</span> - <span class='recCltLawyer' data-lyr='" + e.user_id + "'>" + FisrtNameFix(toTitleCase(e.nombre)) + " " + toTitleCase(e.apaterno) + "</span></p><p class='recCltMail' hidden>" + e.emailclt + "</p><p class='recCltTel' hidden>" + e.telefonoclt + "</p><p hidden><span class='recCltComment'>" + e.comentario + "</span><span class='recCltDate'>" + moment(fecha).format("DD-MM-YYYY") + "</span><span class='recCltHour' hidden>" + hora +"</span></p><span class='recCltAttnd' hidden>" + e.attendance + "</span></td></tr>";
                                   $(td).find(".tbdAddApp").append(tablita);
                               }
 
@@ -577,6 +580,8 @@
               dayNum = $(this).attr("data-day");
               fechaCita = $(this).attr("data-fecha");
               horaCita = $(this).parent(".trHour").attr("data-hour");
+              $(".dateRm").text(moment(fechaCita).format("DD-MM-YYYY"));
+              $(".hourRm").text(horaCita);
 
               if(horaCita == "13:30:00" || horaCita == "14:00:00"){
                   var modalAnnounce = $(".modal-announce")
@@ -604,7 +609,13 @@
               dayNumbers[i] = $(e).text();
           });
 
-          
+          $(".monthBefore").text(monthNames[month]);
+
+          if(dayNumbers[0] > dayNumbers[6]){
+              $(".monthAfter").css({"visibility":"visible"});
+              $(".monthAfter").text(monthNames[month + 1]);
+          }else
+              $(".monthAfter").css({"visibility":"hidden"});
 
           /*if(dayNumbers[0] > dayNumbers[6])
             wkSwtch = false*/
@@ -623,6 +634,7 @@
           // }
 
           if(wkSwtch == false){
+              //$(".monthAfter").text(monthNames[month + 1]);
               var dsCurrent = [], dsNew = [], crtMnt, countCurrent = 0;
               for(var i = 0; i < dayNumbers.length; i++){
                   if(parseInt(dayNumbers[i]) > (daysMonth - 7)){

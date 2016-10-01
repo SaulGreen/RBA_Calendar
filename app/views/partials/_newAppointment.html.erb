@@ -1,6 +1,6 @@
 <div class="testbox">
     <div class="x-cross"><i class="fa fa-times-circle fa-2x"></i></div>
-    <h1>Crear citas</h1>
+    <h1 class="appTitle">Crear citas</h1>
     <%= form_for("/appointment/nuevaCita", method: :post) do %>
         <div class="accounttype">
             <%= radio_button "account", "None", true, id: "radioOne" %>
@@ -32,6 +32,7 @@
         <%= text_field "personas", nil, placeholder: "Personas", id: "personas", class: "frmApp" %>
         <%= text_area "comentario", nil, placeholder: "Comentario", id: "textarea" %>
         <a class="buttons" id="btnRegistro">Registrar</a>
+        <h4 class="dateHourApp">Fecha: <span class="dateRm"></span> Hora:<span class="hourRm"></span></h4>
     <%end%>
 </div>
 
