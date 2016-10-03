@@ -250,7 +250,7 @@
               dataType: "json",
               data: data,
               success: function(resp){
-                //console.log(resp)
+                  console.log(resp)
                   var arrayColors = [];
                   $.ajax({
                       url: '/day/GetAllColors',
@@ -286,7 +286,7 @@
                               }else{
                                   var appHour = $('[data-hour="' + hora + '"]');
                                   var td = $(appHour).find('[data-fecha="' + fecha + '"]');
-                                  var tablita = "<tr class='childtdcitas'><td class='tdAppLaw2' style='background-color:" + aux + "'><p class='recCltName' data-clt='" + e.id + "'> <span class='clName'>" + toTitleCase(e.nombreclt) + "</span> <span class='clApa'> " + toTitleCase(e.apaternoclt) + "</span><span class='clAma' hidden> " + toTitleCase(e.amaternoclt) + "</span></p><p><span class='recCltNumCaso' hidden>" + e.numcaso + "</span></p><p class='cTypeLaw'><span class='recCltCase'>" + e.tipocaso + "</span> - <span class='recCltLawyer' data-lyr='" + e.user_id + "'>" + FisrtNameFix(toTitleCase(e.nombre)) + " " + toTitleCase(e.apaterno) + "</span></p><p class='recCltMail' hidden>" + e.emailclt + "</p><p class='recCltTel' hidden>" + e.telefonoclt + "</p><p hidden><span class='recCltComment'>" + e.comentario + "</span><span class='recCltDate'>" + moment(fecha).format("DD-MM-YYYY") + "</span><span class='recCltHour' hidden>" + hora +"</span></p><span class='recCltAttnd' hidden>" + e.attendance + "</span></td></tr>";
+                                  var tablita = "<tr class='childtdcitas'><td class='tdAppLaw2' style='background-color:" + aux + "'><p class='recCltName' data-clt='" + e.id + "'> <span class='clName'>" + toTitleCase(e.nombreclt) + "</span> <span class='clApa'> " + toTitleCase(e.apaternoclt) + "</span><span class='clAma' hidden> " + toTitleCase(e.amaternoclt) + "</span></p><p><span class='recCltNumCaso' hidden>" + e.numcaso + "</span></p><p class='cTypeLaw'><span class='recCltCase'>" + e.tipocaso + "</span> - <span class='recCltLawyer' data-lyr='" + e.user_id + "'>" + FisrtNameFix(toTitleCase(e.nombre)) + " " + toTitleCase(e.apaterno) + "</span><span class='recCltLast pull-right' hidden> " + toTitleCase(e.cr_name) + " " + toTitleCase(e.cr_last) + "</span></p><p class='recCltMail' hidden>" + e.emailclt + "</p><p class='recCltTel' hidden>" + e.telefonoclt + "</p><p hidden><span class='recCltComment'>" + e.comentario + "</span><span class='recCltDate'>" + moment(fecha).format("DD-MM-YYYY") + "</span><span class='recCltHour' hidden>" + hora +"</span></p><span class='recCltAttnd' hidden>" + e.attendance + "</span></td></tr>";
                                   $(td).find(".tbdAddApp").append(tablita);
                               }
 

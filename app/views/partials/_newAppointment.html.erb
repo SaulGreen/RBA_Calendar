@@ -65,6 +65,7 @@
             <hr class="spteApp">
             <p><b>Comentario:   </b><span class="cltComment"></span></p>
             <p><b>Asesor: </b><span class="cltlawyer"></span></p>
+            <p><b>Ultima edicion:</b><span class="cltLast"></span></p>
         </div>
     </div>
 </div>
@@ -291,6 +292,7 @@
         modalAppoint.find(".cltEmail").text(cita.find(".recCltMail").text());
         modalAppoint.find(".cltComment").text(cita.find(".recCltComment").text());
         modalAppoint.find(".cltlawyer").text(cita.find(".recCltLawyer").text());
+        modalAppoint.find(".cltLast").text(cita.find(".recCltLast").text());
 
         modalAppoint.fadeIn(500);
         capaModalAppear(modalAppoint)
