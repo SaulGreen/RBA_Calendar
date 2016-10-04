@@ -83,7 +83,7 @@
           fecha = fechaCita + " " + horaCita ;
           hora = horaCita;
           numPersona = $("#personas").val();
-          comentario = $("#textarea").val();
+          comentario = toTitleCase($("#textarea").val());
           idCase = $("#numCase").val();
 
           var d = fecha + " " + hora;
