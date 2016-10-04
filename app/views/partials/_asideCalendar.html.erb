@@ -15,7 +15,7 @@
         <%= submit_tag "Semana", class: "btnsemana" %>
         <%= submit_tag "Mes", class: "btnmes" %>
     </div>
-    <% if @rolUsuario == 4 || @rolUsuario == 2 %>
+    <% if @rolUsuario == 4 || @rolUsuario == 2 || @rolUsuario == 1%>
         <div id="personal">
             <h3 style="margin-left:25px; font-size:20px; font-weight:bold; cursor:pointer;" id="allCalendars">Otros Calendarios</h3>
             <ul class="listUsers"></ul>
