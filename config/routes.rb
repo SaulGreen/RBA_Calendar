@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   post 'appointment/Attendance'
   post "appointment/GetAssistantAppointments"
   post "appointment/CheckAnnouncement"
+  post "appointment/PrintSchedulePDF"
 
   post "log/GetFullLog"
   get "log/GetLogActions"

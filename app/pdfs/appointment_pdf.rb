@@ -8,7 +8,7 @@ class AppointmentPdf < Prawn::Document
 
 	end
 
-	def text_content 
+	def text_content  
 		y_position = cursor - 50
 
 		if @usrRole == 4

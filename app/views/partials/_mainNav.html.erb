@@ -21,7 +21,7 @@
                      <div class="dropdown">
                         <button onclick="myFunction()" class="dropbtn"><%= @usuario %><i class="fa fa-caret-down carete" aria-hidden="true"></i></button>
                         <div id="myDropdown" class="dropdown-content">
-                           <a href="#reportes">Reporte</a>
+                           <a id="dashSch">Imprimir agenda</a>
                            <a id="dashVar">Dashboard</a>
                            <hr>
                            <%= link_to "Cerrar sesion", destroy_user_session_path, method: :delete, class: "sub" %>
@@ -34,4 +34,26 @@
 </header>
 <div class="ajaxLoad" hidden><%= image_tag("321.gif") %></div>
 <div class="loadModal" hidden></div>
+<div class="schPrnt" hidden style="width:925px; height:140px; position:fixed; z-index:50; background-color:#fff; margin-left:29%; margin-top:10%;">
+    <h4 style="text-align:center;">Impresión de agenda</h4>
+    <div class="schOpt">
+        <form class="form-inline">
+            <hr>
+            <div class="checkbox formSche">
+                <label><input type="checkbox" class="ckSch" id="chkAll" data-sch='1'> Todos los asesores</label>
+            </div>
+            <div class="checkbox formSche">
+                <label><input type="checkbox" class="ckSch" id="chkOne" data-sch='2'> Asesor individual</label>
+            </div>
+            <div class="form-group">
+                <select class="form-control" id="schLwrs" disabled><option>Seleccione..</option></select>
+            </div>
+            <div class="form-group">
+                <label>Fecha: </label>
+                <input type="date" class="form-control" id="dwSch">
+            </div>
+            <button type="submit" id="btnSch" class="btn btn-sm btn-info">Descargar</button>
+        </form>
+    </div>
+</div>
 <%= render "partials/generalScripts" %>

@@ -3,6 +3,7 @@ class AppointmentController < ApplicationController
 	before_action :GetUserData
   #before_action :CheckIfUserIsActive
 	before_action :GetAbogadosCasos
+  skip_before_filter :verify_authenticity_token, :only => :PrintSchedulePDF
 
 	def index
 	end
@@ -22,10 +23,8 @@ class AppointmentController < ApplicationController
       client_id = @appointment.client_id
       client = Client.where(:id => client_id).update_all(:nombreclt => params[:nName],:apaternoclt => params[:nApa],:amaternoclt => params[:nAma],:numcaso => params[:n_Caso],:telefonoclt => params[:nTel],:emailclt=>params[:nMail])
 
-
-
-
       appCheck = Appointment.where(:fecha => params[:fecha], :hora => params[:hora], :user_id => params[:user_id], :status_app => 1).count
+      
 
       if appCheck > 0
           respond_to do |format|
@@ -50,9 +49,6 @@ class AppointmentController < ApplicationController
               format.json { render :text => @appointment.to_json }
           end
       end
-          
-
-      
   end
 
 	def GetUserData
@@ -147,7 +143,7 @@ class AppointmentController < ApplicationController
           format.json { render :text => @appointment.to_json }
       end
   end
-''
+
   def LogAppointment(user,action,client,fecha,hora,lawyer)
 
       request.remote_ip
@@ -188,6 +184,32 @@ class AppointmentController < ApplicationController
           format.json { render :text => @weekAppointments.to_json }
       end
   end
+
+  # def PrintSchedulePDF
+  #     if params[:option] == 1
+  #         apps = Appointment.joins(:client).joins(:user).joins(:case_type).where("status_app = 1 AND fecha = ?", params[:fecha]).all.select("numcaso", "client_id, tipocaso, nombre, apaterno, color_id, fecha, hora, nombreclt, apaternoclt, numpersonas, lower(comentario) as comnt, telefonoclt as tel, emailclt, attendance").order("hora ASC")
+  #         pdf = AppointmentPdf.new(apps,nil)
+  #         filename = params[:fecha].to_s
+  #     elsif params[:option] == 2
+  #         apps = Appointment.joins(:client).joins(:user).joins(:case_type).where("status_app = 1 AND user_id = ? AND fecha = ?", params[:user], params[:fecha]).all.select("numcaso", "client_id, tipocaso, nombre, apaterno, color_id, fecha, hora, nombreclt, apaternoclt, numpersonas, lower(comentario) as comnt, telefonoclt as tel, emailclt, attendance").order("hora ASC")
+  #         pdf = AppointmentPdf.new(apps,params[:user])
+  #         filename = apps.nombre + " " + app.apaterno + " - " + params[:fecha].to_s
+  #     else
+
+  #     end
+
+  #     if apps != nil
+  #         respond_to do |format|
+  #             format.html
+  #             format.pdf do 
+  #                 #pdf = AppointmentPdf.new(apps,current_user.role_id)
+  #                 send_data pdf.render, filename: filename + ".pdf", type: 'application/pdf'
+  #             end
+  #         end
+  #     end
+
+
+  # end
 
   def GetAssistantAppointments
       if current_user.role_id == 2

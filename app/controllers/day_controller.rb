@@ -64,7 +64,7 @@ class DayController < ApplicationController
     end
 
     def getAllUsers
-        @users = User.joins(:color).where("role_id != 4 AND role_id != 1").all.select("id","nombre","apaterno","color_id","color")
+        @users = User.joins(:color).where("role_id != 4 AND role_id != 1 AND status = 2").all.select("id","nombre","apaterno","color_id","color").order("nombre ASC")
 
         respond_to do |format|
           format.json { render :json => @users }
