@@ -3,7 +3,7 @@ class AppointmentController < ApplicationController
 	before_action :GetUserData
   #before_action :CheckIfUserIsActive
 	before_action :GetAbogadosCasos
-  skip_before_filter :verify_authenticity_token, :only => :PrintSchedulePDF
+  #skip_before_filter :verify_authenticity_token, :only => :PrintSchedulePDF
 
 	def index
 	end

@@ -36,7 +36,7 @@ class AppointmentPdf < Prawn::Document
 	end
 
 	def table_content
-		if @usrRole != 4
+		if @usrRole == 4
 			table appointments_rows do
 				row(0).font_style = :bold
 				self.cell_style = { size: 10}

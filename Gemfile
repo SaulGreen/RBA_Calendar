@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -38,6 +38,10 @@ gem 'momentjs-rails'
 gem 'prawn'
 gem 'prawn-table'
 gem "delayed_job_active_record"
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-rails'
+gem 'redis-rack-cache'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
