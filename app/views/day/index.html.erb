@@ -399,7 +399,8 @@
                                 app.css({"background-color":bckClr});
                         });
 
-                        var pdfDate = new Date(year + "-" + currentMonth + "-" + currentDay);
+                        var pdfDate = year + "-" + currentMonth + "-" + currentDay
+                        //var pdfDate = new Date(year + "-" + currentMonth + "-" + currentDay);
                         pdfDate = moment(pdfDate).format("YYYY-MM-DD");
 
                         $("#btnPdf").attr("href",'/day/index.pdf?fecha=' + pdfDate)
