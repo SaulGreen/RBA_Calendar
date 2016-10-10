@@ -18,7 +18,7 @@ class AppointmentPdf < Prawn::Document
 		    end
 
 		    bounding_box([300, y_position], :width => 270, :height => 50) do
-		      text "Fecha: " + @appointments.first.fecha.strftime('%v').to_s, size: 15, style: :bold
+		      text "Fecha: " #+ @appointments.first.fecha.strftime('%v').to_s, size: 15, style: :bold
 		    end
 		else
 			bounding_box([0, y_position], :width => 270, :height => 50) do
