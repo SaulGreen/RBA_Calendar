@@ -6,7 +6,4 @@ class Appointment < ActiveRecord::Base
 	belongs_to :case_type
 	after_save :clear_cache
 
-	def clear_cache
-		$redis.del "apps"
-	end
 end
