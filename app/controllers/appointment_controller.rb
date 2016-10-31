@@ -348,14 +348,14 @@ class AppointmentController < ApplicationController
     params.require(:history).permit(:user_id,:action_id,:fecha,:client_id,:detalles,:ubicacion)
   end
 
-  def fetch_appointments(appointments)
-      $redis.del "apps"
-      apps = $redis.get("apps")
-      if apps.nil?
-        $redis.set("apps",appointments)
-        $redis.expire("apps",1.hour.to_i)
-      end
-      @appointments = JSON.load apps
-  end
+  # def fetch_appointments(appointments)
+  #     $redis.del "apps"
+  #     apps = $redis.get("apps")
+  #     if apps.nil?
+  #       $redis.set("apps",appointments)
+  #       $redis.expire("apps",1.hour.to_i)
+  #     end
+  #     @appointments = JSON.load apps
+  # end
 
 end
