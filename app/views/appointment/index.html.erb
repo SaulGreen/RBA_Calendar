@@ -77,7 +77,7 @@
       weekCalendar(trDays, daysPerMonth);
       WeeklyAppointments(currentMonth, year, false);
       getWeekAppointments(fstDay,lstDay);
-      CheckVacationsPeriod (usrRol,$(".tdDayApp"))
+      //CheckVacationsPeriod (usrRol,$(".tdDayApp"))
 
       $("#btnRegistro").on("click", function(e){
           e.preventDefault();
@@ -505,7 +505,7 @@
 
           WeeklyAppointments(currentMonth, prevWkYear, true);
           getWeekAppointments();
-          CheckVacationsPeriod (usrRol,$(".tdDayApp"))
+          //CheckVacationsPeriod (usrRol,$(".tdDayApp"))
 
           //console.log(currentMonth)
 
@@ -565,7 +565,7 @@
 
           WeeklyAppointments(currentMonth, nextWkYear, wkSwtch);
           getWeekAppointments();
-          CheckVacationsPeriod (usrRol,$(".tdDayApp"))
+          //CheckVacationsPeriod (usrRol,$(".tdDayApp"))
       });
 
       function WeeklyAppointments(month,year,wkSwtch){
