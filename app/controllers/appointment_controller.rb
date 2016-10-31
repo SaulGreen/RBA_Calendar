@@ -179,7 +179,7 @@ class AppointmentController < ApplicationController
           @weekAppointments = Appointment.joins(:client).joins(:case_type).where("user_id = ? AND status_app = 1 AND fecha >= ? AND fecha <= ?", current_user.id, params[:fecha1],params[:fecha2]).select("id", "client_id, fecha, hora, nombreclt, apaternoclt, amaternoclt, numcaso, numpersonas, comentario, telefonoclt, emailclt, attendance, created_by_id, last_edited_by_id, tipocaso")
       end
 
-      fetch_appointments(@weekAppointments.to_json)
+      # fetch_appointments(@weekAppointments.to_json)
 
       respond_to do |format|
           format.json { render :text => @weekAppointments.to_json }
