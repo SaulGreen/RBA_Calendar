@@ -4,6 +4,5 @@ class Appointment < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :client
 	belongs_to :case_type
-	after_save :clear_cache
 
 end
