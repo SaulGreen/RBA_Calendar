@@ -101,7 +101,6 @@ class AppointmentController < ApplicationController
                   fechaStr = @appointment.fecha.strftime('%v').to_s
                   horaStr = @appointment.hora.strftime('%r')
 
-
                   LogAppointment(current_user,4,client,fechaStr,horaStr,lawyer)
                   #@action = Action.where(:id => 6).select(:id)
                   #lawyer.nombre + " " + @action + " el dia " + fecha
@@ -179,6 +178,8 @@ class AppointmentController < ApplicationController
       else
           @weekAppointments = Appointment.joins(:client).joins(:case_type).where("user_id = ? AND status_app = 1 AND fecha >= ? AND fecha <= ?", current_user.id, params[:fecha1],params[:fecha2]).select("id", "client_id, fecha, hora, nombreclt, apaternoclt, amaternoclt, numcaso, numpersonas, comentario, telefonoclt, emailclt, attendance, created_by_id, last_edited_by_id, tipocaso")
       end
+
+      fetch_appointments(@weekAppointments.to_json)
 
       respond_to do |format|
           format.json { render :text => @weekAppointments.to_json }
@@ -345,6 +346,16 @@ class AppointmentController < ApplicationController
 
   def log_params
     params.require(:history).permit(:user_id,:action_id,:fecha,:client_id,:detalles,:ubicacion)
+  end
+
+  def fetch_appointments(appointments)
+      $redis.del "apps"
+      apps = $redis.get("apps")
+      if apps.nil?
+        $redis.set("apps",appointments)
+        $redis.expire("apps",1.hour.to_i)
+      end
+      @appointments = JSON.load apps
   end
 
 end

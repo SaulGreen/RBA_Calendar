@@ -32,7 +32,26 @@
 
 <!--AQUI ELIMINE GENESRAL -->
 <script>
+
+
+
   $(document).on("ready", function(){
+
+      // var socket = io.connect();
+      // socket.on("apps",function(data){
+      //     //console.log(data)
+      // })
+
+      // var socket = new io.Socket("127.0.0.1", {port: 6379, rememberTransport: false});
+      // socket.on("connect", function(){
+      //     console.log("connected to server")
+      // });
+      // socket.on("message", function(message){
+      //     console.log(message);
+      // });
+      // socket.on("disconnect", function(){});
+
+      // socket.connect();
 
       $(".ajaxLoad, .loadModal").show();
 
@@ -56,7 +75,7 @@
       var monthNames = ["","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
       weekCalendar(trDays, daysPerMonth);
-      WeeklyAppointments(currentMonth, year, true);
+      WeeklyAppointments(currentMonth, year, false);
       getWeekAppointments(fstDay,lstDay);
       CheckVacationsPeriod (usrRol,$(".tdDayApp"))
 
@@ -574,6 +593,7 @@
           else
               newMonth = false;
 
+          
 
           if(newMonth == true && wkSwtch == true){
               $(".monthBefore").text(monthNames[month - 1]);
