@@ -400,9 +400,11 @@
                         });
 
                         if(currentDay.toString().length < 2)
-                            currentDay = "0" + currentDay
+                            auxDay = "0" + currentDay
+                        else
+                            auxDay = currentDay;
 
-                        var pdfDate = year + "-" + currentMonth + "-" + currentDay
+                        var pdfDate = year + "-" + currentMonth + "-" + auxDay
                         //var pdfDate = new Date(year + "-" + currentMonth + "-" + currentDay);
                         pdfDate = moment(pdfDate).format("YYYY-MM-DD");
 
