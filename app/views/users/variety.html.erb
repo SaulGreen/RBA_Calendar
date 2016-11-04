@@ -1,90 +1,129 @@
 <%= render "partials/mainNav" %>
 <%= render "partials/dashboardMenu"%>
 
-<div id="divAvi" class="dshBox divVar" hidden>
-	<h3>Avisos</h3>
-	<hr style="border-top: 1px solid #ccc;">
-	<div id="divAdv">
-        <h4>Aviso de ausencia o no interrupciones</h4>
-        <form class="form-inline">
-        	<div class="form-group">
-        		<label for="txtTitle" >Titulo:</label>
-        		<input type="text" class="form-control" id="txtTitle" style="margin-top:0px;">
-        	</div>
-        	<div class="form-group">
-        		<label for="txtTitle">Fecha:</label>
-        		<input type="date" class="form-control" id="dtAviso">
-        	</div>
-        	<div class="form-group">
-        		<label for="txtTitle">Salida:</label>
-        		<select class="form-control" id="slctOtAd">
-        			<option>Hora..</option>
-					<option value="10:30:00">10:30</option>
-					<option value="11:00:00">11:00</option>
-					<option value="11:30:00">11:30</option>
-					<option value="12:00:00">12:00</option>
-					<option value="12:30:00">12:30</option>
-					<option value="13:00:00">13:00</option>
-					<option value="13:30:00">13:30</option>
-					<option value="14:00:00">14:00</option>
-					<option value="14:30:00">14:30</option>
-					<option value="15:00:00">15:00</option>
-					<option value="15:30:00">15:30</option>
-					<option value="16:00:00">16:00</option>
-					<option value="16:30:00">16:30</option>
-					<option value="17:00:00">17:00</option>
-					<option value="17:30:00">17:30</option>
-					<option value="18:00:00">18:00</option>
-					<option value="18:30:00">18:30</option>
-				</select>
-				<label for="">Regreso:</label>
-				<select class="form-control" id="slctInAd">
-					<option>Hora..</option>
-					<option value="10:30:00">10:30</option>
-					<option value="11:00:00">11:00</option>
-					<option value="11:30:00">11:30</option>
-					<option value="12:00:00">12:00</option>
-					<option value="12:30:00">12:30</option>
-					<option value="13:00:00">13:00</option>
-					<option value="13:30:00">13:30</option>
-					<option value="14:00:00">14:00</option>
-					<option value="14:30:00">14:30</option>
-					<option value="15:00:00">15:00</option>
-					<option value="15:30:00">15:30</option>
-					<option value="16:00:00">16:00</option>
-					<option value="16:30:00">16:30</option>
-					<option value="17:00:00">17:00</option>
-					<option value="17:30:00">17:30</option>
-					<option value="18:00:00">18:00</option>
-					<option value="18:30:00">18:30</option>
-				</select>
-        	</div>
-        	<div class="form-group">
-        		<label>
-		          	<input type="checkbox" id="chkAll"> No asistir&eacute;
-		        </label>
-        	</div>
-        </form>
-		<br>
-		<label for="">Descripcion:</label><textarea name="" id="txtCmnt" cols="10" rows="10" class="form-control" style="height:50px; width:100%;"></textarea>
-		<br>
-		<input type="button" class="btn btn-info btn-sm pull-right" id="btnAdv" value="Guardar en calendario">
-		<br>
-		<hr style="border-top: 1px solid #ccc;">
-
-		<h3>Anuncios / Avisos creados</h3>
-		<div style="background-color:white;">
-			<table class="table table-bordered">
-				<thead>
-					<th>Creado:</th>
-					<th>Dia programado</th>
-					<th>Hora inicial</th>
-					<th>Hora final</th>
-					<th>Dia entero</th>
-					<th>Opciones</th>
-				</thead>
-				<tbody id="tblAnns"></tbody>
-			</table>
+<div id="divAvi" class="dshBox divVar">
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="width:1000px;">
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" id="headingOne">
+				<h4 class="panel-title">
+					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Avisos de los usuarios.</a>
+				</h4>
+			</div>
+			<div id="collapseOne" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+				<div class="panel-body">
+					<div style="background-color:white;">
+						<table class="table table-bordered">
+							<thead>
+								<th>Usuario</th>
+								<th>Dia programado</th>
+								<th>Hora inicial</th>
+								<th>Hora final</th>
+								<th>Asistencia</th>
+								<th>Autoriza</th>
+								<th>Opciones</th>
+							</thead>
+							<tbody id="tblAnns"></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" id="headingTwo">
+				<h4 class="panel-title">
+					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">Crear un nuevo aviso.</a>
+				</h4>
+			</div>
+			<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+				<div class="panel-body">
+					<form class="announce-form">
+						<div class="form-group">
+							<label>Tipo de aviso:</label>
+							<select class="form-control" id="slctAnnType">
+								<option value="">Seleccione...</option>
+								<option value="1">Ausencia</option>
+								<option value="2">Reunion</option>
+								<option value="3">Dia festivo</option>
+							</select>
+						<!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email"> -->
+						</div>
+						<div class="form-group">
+							<label>Usuario:</label>
+							<select class="form-control" id="slctUserAnn">
+								<option value="">Seleccione...</option>
+							</select>
+						<!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email"> -->
+						</div>
+						<div class="form-group">
+							<label>Autoriza:</label>
+							<select class="form-control" id="slctAdminAut">
+								<option value="">Seleccione...</option>
+							</select>
+						<!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email"> -->
+						</div>
+						<div class="form-group">
+							<label>Titulo:</label>
+							<input type="" class="form-control" id="txtTitle" placeholder="Titulo de aviso">
+						</div>
+						<div class="form-group">
+							<label>Fecha:</label>
+							<input type="date" class="form-control" id="dtAviso">
+						</div>
+						<div class="form-group">
+							<label><input type="checkbox" id="chkAll"> No acudira a oficina.</label>
+						</div>
+						<div class="form-group">
+							<label for="txtTitle">Salida:</label>
+							<select class="form-control" id="slctOtAd">
+								<option>Hora..</option>
+								<option value="10:30:00">10:30</option>
+								<option value="11:00:00">11:00</option>
+								<option value="11:30:00">11:30</option>
+								<option value="12:00:00">12:00</option>
+								<option value="12:30:00">12:30</option>
+								<option value="13:00:00">13:00</option>
+								<option value="13:30:00">13:30</option>
+								<option value="14:00:00">14:00</option>
+								<option value="14:30:00">14:30</option>
+								<option value="15:00:00">15:00</option>
+								<option value="15:30:00">15:30</option>
+								<option value="16:00:00">16:00</option>
+								<option value="16:30:00">16:30</option>
+								<option value="17:00:00">17:00</option>
+								<option value="17:30:00">17:30</option>
+								<option value="18:00:00">18:00</option>
+								<option value="18:30:00">18:30</option>
+							</select>
+							<label for="">Regreso:</label>
+							<select class="form-control" id="slctInAd">
+								<option>Hora..</option>
+								<option value="10:30:00">10:30</option>
+								<option value="11:00:00">11:00</option>
+								<option value="11:30:00">11:30</option>
+								<option value="12:00:00">12:00</option>
+								<option value="12:30:00">12:30</option>
+								<option value="13:00:00">13:00</option>
+								<option value="13:30:00">13:30</option>
+								<option value="14:00:00">14:00</option>
+								<option value="14:30:00">14:30</option>
+								<option value="15:00:00">15:00</option>
+								<option value="15:30:00">15:30</option>
+								<option value="16:00:00">16:00</option>
+								<option value="16:30:00">16:30</option>
+								<option value="17:00:00">17:00</option>
+								<option value="17:30:00">17:30</option>
+								<option value="18:00:00">18:00</option>
+								<option value="18:30:00">18:30</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Descripcion:</label>
+							<textarea name="" id="txtCmnt" cols="10" rows="10" class="form-control" style="height:50px; width:100%;"></textarea>
+						</div>
+						<input type="button" class="btn btn-info btn-sm pull-right" id="btnAdv" value="Guardar en calendario">
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

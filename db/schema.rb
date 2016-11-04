@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920222548) do
+ActiveRecord::Schema.define(version: 20161102174115) do
 
   create_table "actions", force: :cascade do |t|
     t.string   "accion"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20160920222548) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "announcements", force: :cascade do |t| 
+  create_table "announcements", force: :cascade do |t|
     t.string   "titulo"
     t.text     "comentario"
     t.date     "fecha"
@@ -27,8 +27,13 @@ ActiveRecord::Schema.define(version: 20160920222548) do
     t.time     "horafinal"
     t.integer  "id_user"
     t.boolean  "completo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "created_by"
+    t.integer  "last_edited_by"
+    t.integer  "type_announce"
+    t.integer  "status_announce", default: 1
+    t.integer  "authorized_by"
   end
 
   create_table "appointments", force: :cascade do |t|
