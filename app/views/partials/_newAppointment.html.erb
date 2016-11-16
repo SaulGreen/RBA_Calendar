@@ -412,25 +412,35 @@
             contentType: "application/json; charset-utf8",
             data: JSON.stringify(data),
             success: function(resp){
-                //console.log(resp)
+                console.log(resp)
                 if(resp != null){
                     avisos = resp.avisos;
                     vacaciones = resp.vacaciones;
+                    festivos = resp.festivos;
 
                     if(avisos.length > 0){
                         $(avisos).each(function(i,e){
-                            //console.log(e)
+                            console.log(e)
                             if(e.completo == true)
                                 aviso = "<p style='text-align:left;'>Nota: " + usrName + " no estara disponible durante todo el dia. <br><br><b style='text-align:left;'>" + usrName + ": </b> " + e.comentario + "</p>";
                             else    
                                 aviso = "<p style='text-align:left;'>Nota: " + usrName + " no esta disponible de " + moment(e.horainicio).format("HH:mm") + " a " + moment(e.horafinal).format("HH:mm") + ".<br><br><b style='text-align:left;'>" + usrName + ": </b> " + e.comentario + "</p>";
-                            SystemAnnounce(aviso,modal)
+                            
+                            SystemAnnounce(aviso,modal);
                         });
                     }else if(vacaciones.length > 0){
                         $(vacaciones).each(function(i,e){
-                            //console.log(e.startdate + " --- " + e.enddate)
+                            console.log(e.startdate + " --- " + e.enddate)
                             aviso = "<p style='text-align:left;'>Nota: " + usrName + " estara ausente del dia " + moment(e.startdate).format("DD-MM-YYYY") + " al dia " +  moment(e.enddate).format("DD-MM-YYYY") + ". <br><br><b style='text-align:left;'>" + usrName + ":</b> " + e.comment + "</p>";
-                            SystemAnnounce(aviso,modal)
+                            
+                            SystemAnnounce(aviso,modal);
+                        });
+                    }else if(festivos.length > 0){
+                        $(festivos).each(function(i,e){
+                            console.log(e);
+                            aviso = "<p style='text-align:left;'>Nota: El dia seleccionado esta marcado como dia inhabil dentro del calendario. <br><br><b style='text-align:left;'>" + usrName + ": </b> " + e.comentario + "</p>";
+                            
+                            SystemAnnounce(aviso,modal);
                         });
                     }
                 }

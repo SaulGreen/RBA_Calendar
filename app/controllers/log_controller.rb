@@ -152,7 +152,7 @@ class LogController < ApplicationController
 		# horaOut = horaOut.strftime('%r')
 		# horaIn = horaIn.strftime('%r')
 
-		@announce = Announcement.create(:titulo => params[:titulo], :fecha => params[:fecha], :comentario => params[:comentario], :horainicio => horaOut, :horafinal => horaIn, :completo => allDayLong, :id_user => current_user.id)
+		@announce = Announcement.create(:titulo => params[:titulo], :fecha => params[:fecha], :comentario => params[:comentario], :horainicio => horaOut, :horafinal => horaIn, :completo => allDayLong, :id_user => params[:user], :authorized_by => params[:auth], :created_by => current_user.id, :last_edited_by => current_user.id, :type_announce => params[:type])
 
 		if @announce.save
 			respond_to do |format|
@@ -176,6 +176,21 @@ class LogController < ApplicationController
 			avisos = nil
 			respond_to do |format|
 				format.json { render :text => avisos.to_json }
+			end
+		end
+	end
+
+	def GetAdmins
+		admins = User.where(:role_id => 2, :status => 2)
+
+		if admins.size > 0
+			respond_to do |format|
+				format.json { render :text => admins.to_json}
+			end
+		else
+			admins = nil
+			respond_to do |format|
+				format.json { render :text => admins.to_json }
 			end
 		end
 	end

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   post "log/GetFullLog"
   get "log/GetLogActions"
+  get "log/GetAdmins"
   get "log/GetUsersLog"
   post "log/SetVacationPeriod"
   get "log/GetAllCaseTypes"

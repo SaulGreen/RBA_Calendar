@@ -63,6 +63,25 @@
 
         $("#dashAnn").on("click", function(){
             $("#tblAnns").empty();
+            $("#slctAdminAut").empty();
+            $("#slctAdminAut").append("<option>Seleccione..</option>")
+
+            $.ajax({
+                type: "get",
+                url: "/log/GetAdmins",
+                dataType: "json",
+                contentType: "application/json; charset-UTF8",
+                success: function(resp){
+                    opt = "";
+                    $(resp).each(function(i,e){
+                        opt += "<option value='" + e.id + "'>" + e.nombre + " " + e.apaterno + "</option>"
+                    });
+                    $("#slctAdminAut").append(opt);
+                }, error: function(xhr,status,error){
+                    console.log(xhr);
+                    alert(error)
+                }
+            })
 
             $.ajax({
                 type: "POST",

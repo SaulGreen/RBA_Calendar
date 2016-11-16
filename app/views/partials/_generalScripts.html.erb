@@ -26,62 +26,6 @@
             }
         })
 
-        // $("#btnSch").on("click", function(e){
-        //     e.preventDefault();
-
-        //     var optSlctd = $(".ckSch:checked").attr("data-sch");
-        //     var usrSlctd = $("#schLwrs option:selected").val();
-        //     var dteSlctd = $("#dwSch").val();
-
-        //     //alert(optSlctd + ' ' + usrSlctd + " " + dteSlctd)
-        //     if(dteSlctd == "")
-        //         alert("Seleccione una fecha valida.")
-        //     else{
-        //         if(optSlctd == 1){
-        //             RequestForPDF(optSlctd,null,dteSlctd)
-        //         }
-        //         else if(optSlctd == 2){
-        //             if(!parseInt(usrSlctd))
-        //                 alert("Seleccione el asesor del cual desea descargar la agenda.")
-        //             else{
-        //                 RequestForPDF(optSlctd,usrSlctd,dteSlctd)
-        //             }
-        //         }
-        //     }
-        // });
-
-        // function RequestForPDF(option,user,date){
-        //     var data = { option: option, user: user, date: date};
-        //     var http = new XMLHttpRequest();
-        //     var url = "/appointment/PrintSchedulePDF";
-
-        //     http.open("POST",url,true);
-        //     http.setRequestHeader("Content-type","application/json; charset-utf8");
-        //     http.onload = function(){
-        //         if(this.status === 200){
-        //             var blob = new blob([http.response], {type:"application/pdf"});
-        //             var objectUrl = URL.createObjectURL(blob);
-        //             window.open(objectUrl);
-        //         }
-        //     };
-
-        //     http.send()
-
-        //     // $.ajax({
-        //     //     type: "POST",
-        //     //     url: ,
-        //     //     contentType: 'application/pdf',
-        //     //     dataType: "pdf",
-        //     //     data: JSON.stringify(data),
-        //     //     success: function(resp){
-        //     //         window.open(resp)
-        //     //     },error: function(xhr,status,error){
-        //     //         alert(error);
-        //     //         console.log(xhr);
-        //     //     }
-        //     // })
-        // }
-
         $("#dashSch").on("click", function(e){
             e.preventDefault();
             $(".schPrnt").prop("hidden",false);

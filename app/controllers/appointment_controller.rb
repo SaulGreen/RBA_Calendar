@@ -289,17 +289,19 @@ class AppointmentController < ApplicationController
 
   def CheckAnnouncement
       hora = params[:hora]
-      @avisos = Announcement.where("id_user = ? AND fecha = ? AND completo = ?",params[:user],params[:fecha],true).all 
+      @avisos = Announcement.where("id_user = ? AND fecha = ? AND completo = ? AND status_announce = 1",params[:user],params[:fecha],true).all 
+      @festivos = Announcement.where("type_announce = 3 AND status_announce = 1 AND fecha = ?",params[:fecha]).all
 
       if @avisos.size < 1     
           @avisos = Announcement.where("id_user = ? AND fecha = ? AND horainicio <= ? AND horafinal > ?",params[:user],params[:fecha],params[:hora].to_time,params[:hora].to_time).all
       else
+
       end
 
       @vacation = Vacation.where("user_id = ? AND startdate <= ? AND enddate >= ?",params[:user],params[:fecha],params[:fecha]).all
-      ausencias = { avisos: @avisos, vacaciones: @vacation };
+      ausencias = { avisos: @avisos, vacaciones: @vacation, festivos: @festivos };
 
-      if @avisos.size > 0 || @vacation.size > 0
+      if @avisos.size > 0 || @vacation.size > 0  || @festivos.size > 0
           respond_to do |format|
               format.json { render :text => ausencias.to_json }
           end

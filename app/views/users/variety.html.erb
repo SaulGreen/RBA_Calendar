@@ -47,18 +47,16 @@
 							</select>
 						<!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email"> -->
 						</div>
-						<div class="form-group">
+						<div class="form-group user-group" hidden>
 							<label>Usuario:</label>
 							<select class="form-control" id="slctUserAnn">
 								<option value="">Seleccione...</option>
 							</select>
 						<!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email"> -->
 						</div>
-						<div class="form-group">
+						<div class="form-group user-auth">
 							<label>Autoriza:</label>
-							<select class="form-control" id="slctAdminAut">
-								<option value="">Seleccione...</option>
-							</select>
+							<select class="form-control" id="slctAdminAut"></select>
 						<!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email"> -->
 						</div>
 						<div class="form-group">
@@ -69,11 +67,11 @@
 							<label>Fecha:</label>
 							<input type="date" class="form-control" id="dtAviso">
 						</div>
-						<div class="form-group">
+						<div class="form-group abs-group">
 							<label><input type="checkbox" id="chkAll"> No acudira a oficina.</label>
 						</div>
 						<div class="form-group">
-							<label for="txtTitle">Salida:</label>
+							<label for="txtTitle">Salida/Inicio:</label>
 							<select class="form-control" id="slctOtAd">
 								<option>Hora..</option>
 								<option value="10:30:00">10:30</option>
@@ -94,7 +92,7 @@
 								<option value="18:00:00">18:00</option>
 								<option value="18:30:00">18:30</option>
 							</select>
-							<label for="">Regreso:</label>
+							<label for="">Regreso/Finalizacion:</label>
 							<select class="form-control" id="slctInAd">
 								<option>Hora..</option>
 								<option value="10:30:00">10:30</option>
@@ -387,21 +385,20 @@
 <script type="text/javascript">
 	$(document).on("ready",function(){
 
+		var allDay = false;
+
 		$("#btnAdv").on("click", function(){
+			var annType = $("#slctAnnType option:selected").val();
+			var annUser = $("#slctUserAnn option:selected").val();
+			var authOpt = $("#slctAdminAut option:selected").val();
 			var title = $("#txtTitle").val();
 			var dtAviso = $("#dtAviso").val();
 			var comment = $("#txtCmnt").val();
 			var hrOut = $("#slctOtAd option:selected").val();
 			var hrIn = $("#slctInAd option:selected").val();
-			var allDay = $("#chkAll").val(); 
 
-			if($("#chkAll").is(":checked")){
-				allDay = true;
-			}else
-				allDay = false;
-
-			var data = { titulo: title, fecha: dtAviso, comentario: comment, horainicio: hrOut, horafinal: hrIn, allDay: allDay }
-
+			var data = { titulo: title, fecha: dtAviso, comentario: comment, horainicio: hrOut, horafinal: hrIn, allDay: allDay, user: annUser, auth: authOpt, type: annType }
+			console.log(data)
 			$.ajax({
 				type: "POST",
 				url: "/log/SetAnnouncement",
@@ -409,9 +406,9 @@
 				contentType: "application/json; charset-UTF8",
 				data: JSON.stringify(data),
 				success: function(resp){
-					console.log(resp)
 					if(resp != null){
 						alert("Aviso generado con exito.")
+						console.log(resp);
 					}
 				},error: function(xhr,status,error){
 					console.log(xhr);
@@ -420,14 +417,27 @@
 			})
 		});
 
-		$("#chkAll").on("change", function(){
+		$("#slctAnnType").on("change", function(){
+			var advType = $("#slctAnnType option:selected").val();
+
+			if(advType != 1){
+				$(".user-group").hide();
+			}else{
+				$(".user-group").show();
+		}
+		})
+
+		$("body").on("change", "#chkAll", function(){
 			var elem = $(this);
+
 			if(elem.is(":checked")){
 				$("#slctOtAd").prop("selectedIndex",0).prop("disabled","disabled");
 				$("#slctInAd").prop("selectedIndex",0).prop("disabled","disabled");
+				allDay = true;
 			}else{
 				$("#slctOtAd").prop("selectedIndex",0).prop("disabled",false);
 				$("#slctInAd").prop("selectedIndex",0).prop("disabled",false);
+				allDay = false;
 			}
 		})
 
@@ -526,6 +536,7 @@
 					opt += "<option value='" + e.id + "'>" + e.nombre + " " + e.apaterno + "</option>"
 				})
 				$("#slctUsr").append(opt);
+				$("#slctUserAnn").append(opt);
 				$("#slctUsrEdt").append(opt);
 			}, error: function(xhr,status,error){
                	console.log(xhr);
