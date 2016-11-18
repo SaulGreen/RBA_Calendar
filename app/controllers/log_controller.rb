@@ -166,7 +166,7 @@ class LogController < ApplicationController
 	end
 
 	def GetUserAnnouncements
-		avisos = Announcement.where(:id_user => current_user.id)
+		avisos = Announcement.joins("INNER JOIN users x ON x.id = announcements.id_user").joins("INNER JOIN users y ON y.id = announcements.authorized_by").joins("INNER JOIN users z ON z.id = announcements.last_edited_by").select("announcements.id, announcements.status_announce, x.nombre as nAus, x.apaterno as nApa, y.nombre as nAut, y.apaterno as nAtA, z.nombre as nEdt, z.apaterno as nEtA, announcements.fecha, announcements.titulo, announcements.type_announce, announcements.horainicio,announcements.horafinal, announcements.comentario")
 
 		if avisos.size > 0
 			respond_to do |format|

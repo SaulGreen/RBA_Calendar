@@ -2,7 +2,7 @@
 <%= render "partials/dashboardMenu"%>
 
 <div id="divAvi" class="dshBox divVar" hidden>
-	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="width:1000px;">
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="width:1200px;">
 		<div class="panel panel-default">
 			<div class="panel-heading" role="tab" id="headingOne">
 				<h4 class="panel-title">
@@ -12,14 +12,17 @@
 			<div id="collapseOne" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
 				<div class="panel-body">
 					<div style="background-color:white;">
-						<table class="table table-bordered">
+						<table class="table table-bordered table-stripped">
 							<thead>
+								<th>#</th>
 								<th>Usuario</th>
-								<th>Dia programado</th>
+								<th>Fecha</th>
 								<th>Hora inicial</th>
 								<th>Hora final</th>
-								<th>Asistencia</th>
 								<th>Autoriza</th>
+								<th>Ultima edicion</th>
+								<th>Asunto</th>
+								<th>Estatus</th>
 								<th>Opciones</th>
 							</thead>
 							<tbody id="tblAnns"></tbody>
@@ -344,7 +347,7 @@
 		<input type="button" id="btnLog" class="btn btn-sm btn-default" value="Buscar">
 	</div>
 	<div class="logTbl">
-		<table id="tblActLog" class="table table-hover">
+		<table id="tblActLog" class="table table-hover" width="100%" cellspacing="0">
 			<thead>
 				<tr>
 					<th>#</th>
@@ -356,6 +359,15 @@
 			</thead>
 			<tbody class="tblDataLog"> 
 			</tbody>
+			<tfoot>
+				<tr>
+					<th>#</th>
+					<th>Fecha de evento</th>
+					<th>Autor</th>
+					<th>Detalle</th>
+					<th>Ubicaci&#243;n</th>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 </div>
@@ -808,10 +820,14 @@
 					
 					var tr = "", cnt = 1;
 					$(resp).each(function(i,e){
-						tr += "<tr><td scope='row'>" + cnt + "</td><td>" + moment(e.fechalog).format("DD/MM/YYYY HH:mm:ss a") + "</td><td>" + e.nombre + " " + e.apaterno + "</td><td>" + e.detalles + "</td><td>" + e.ubicacion + "</td></tr>";
+						tr += "<tr><td scope='row'>" + cnt + "</td><td>" + moment(e.fechalog).format("DD/MM/YYYY HH:mm a") + "</td><td>" + e.nombre + " " + e.apaterno + "</td><td>" + e.detalles + "</td><td>" + e.ubicacion + "</td></tr>";
 						cnt++;
 					});
 					$(".tblDataLog").append(tr);
+
+					$("#tblActLog").DataTable({
+						"pagingType": "full_numbers"
+					});
 					
 				}, error: function(xhr,status,error){
 	               		console.log(xhr);

@@ -167,19 +167,11 @@ class AppointmentController < ApplicationController
 	end
 
   def GetAppointments
-      #SELECT x.nombre as Nombre, x.apaterno as Apaterno, y.nombre as CreatorName, y.apaterno as CreatorLastName, apps.fecha as App_Fecha, apps.hora as App_hora FROM appointments apps INNER JOIN users x ON x.id = apps.user_id INNER JOIN users y ON y.id = apps.created_by_id WHERE y.id = 27
       if current_user.role_id != 3
-          #@weekAppointments = ActiveRecord::Base.connection.exec_query("SELECT a.id as id, a.fecha as fecha, a.hora as hora,  a.comentario as comentario, a.attendance as attendance, x.nombre as nombre, x.apaterno as apaterno, x.color_id as color_id, y.nombre as cr_name, y.apaterno as cr_last, c.id as client_id, c.nombreclt as nombreclt, c.apaternoclt as apaternoclt, c.amaternoclt as amaternoclt, c.numcaso as numcaso, c.telefonoclt as telefonoclt, c.emailclt as emailclt, t.tipocaso as tipocaso FROM appointments a INNER JOIN users x ON x.id = a.user_id INNER JOIN users y ON y.id = a.last_edited_by_id INNER JOIN clients c ON c.id = a.client_id INNER JOIN case_types t on t.id = a.case_type_id WHERE a.status_app = 1 and a.fecha >= '" + params[:fecha1] + "' and a.fecha <= '" + params[:fecha2] + "'")
           @weekAppointments = Appointment.joins("INNER JOIN users x ON x.id = appointments.user_id").joins("INNER JOIN users y ON y.id = appointments.last_edited_by_id").joins("INNER JOIN clients c ON c.id = appointments.client_id").joins("INNER JOIN case_types t ON t.id = appointments.case_type_id").where("appointments.status_app = 1 AND appointments.fecha >= ? AND appointments.fecha <= ?",params[:fecha1],params[:fecha2]).select("appointments.id as id, appointments.fecha as fecha, appointments.hora as hora,  appointments.comentario as comentario, appointments.attendance as attendance, appointments.user_id as user_id, x.nombre as nombre, x.apaterno as apaterno, x.color_id as color_id, y.nombre as cr_name, y.apaterno as cr_last, c.id as client_id, c.nombreclt as nombreclt, c.apaternoclt as apaternoclt, c.amaternoclt as amaternoclt, c.numcaso as numcaso, c.telefonoclt as telefonoclt, c.emailclt as emailclt, t.tipocaso as tipocaso")
-          #@weekAppointments = Appointment.joins(:client).joins(:user).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id","nombre, apaterno, color_id", "user_id, client_id, tipocaso, fecha, hora, nombreclt, apaternoclt, amaternoclt, numcaso, numpersonas, comentario, telefonoclt, emailclt, attendance, created_by_id, last_edited_by_id")
-          #@weekAppointments = Appointment.joins(:client).joins(:lawyer).joins(:creator).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id","nombre, apaterno, color_id", "user_id, client_id, tipocaso, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance")
-          #@weekAppointments = Appointment.joins(:client).joins(:user).includes(:created_by).joins(:case_type).where("status_app = 1 AND fecha >= ? AND fecha <= ? ", params[:fecha1],params[:fecha2]).all.select("id, client_id, nombre, apaterno, color_id","created_by_id")
-          #.select("user_id, client_id, tipocaso, fecha, hora, nombreclt, apaternoclt, numpersonas, comentario, telefonoclt, emailclt, attendance").select("nombre, apaterno, color_id") 
       else
           @weekAppointments = Appointment.joins(:client).joins(:case_type).where("user_id = ? AND status_app = 1 AND fecha >= ? AND fecha <= ?", current_user.id, params[:fecha1],params[:fecha2]).select("id", "client_id, fecha, hora, nombreclt, apaternoclt, amaternoclt, numcaso, numpersonas, comentario, telefonoclt, emailclt, attendance, created_by_id, last_edited_by_id, tipocaso")
       end
-
-      # fetch_appointments(@weekAppointments.to_json)
 
       respond_to do |format|
           format.json { render :text => @weekAppointments.to_json }
@@ -237,16 +229,6 @@ class AppointmentController < ApplicationController
   def searchCustomer
       client = params[:client]
       option = params[:opt]
-      
-      # opt = params[:opt]
-
-      # if opt == 1
-      #     @client = Client.where("lower(nombreclt) = ? AND lower(apaternoclt) = ? OR lower(emailclt) = ? OR telefonoclt = ? OR numcaso = ?", params[:name].downcase,params[:apaterno].downcase,params[:email].downcase,params[:telefono],params[:numcase]).first
-      # elsif == 2
-
-      # elsif  == 3
-
-      # elsif == 4
         
       if option == 1
         @client = Client.where("lower(apaternoclt) = ? AND status_app = 1",client.downcase).joins(:appointment).select("nombreclt, apaternoclt, telefonoclt, fecha, hora").order("fecha ASC").all
