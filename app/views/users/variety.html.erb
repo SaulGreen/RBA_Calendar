@@ -2,7 +2,7 @@
 <%= render "partials/dashboardMenu"%>
 
 <div id="divAvi" class="dshBox divVar" hidden>
-	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="width:1500px;">
+	<div class="panel-group" id="accordion-announce" role="tablist" aria-multiselectable="true" style="width:1500px;">
 		<div class="panel panel-default">
 			<div class="panel-heading" role="tab" id="headingOne">
 				<h4 class="panel-title">
@@ -239,17 +239,17 @@
 										</tr>-->
 									</tbody>
 								</table>
-								<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+								<div class="panel-group" id="accordion-task" role="tablist" aria-multiselectable="true">
 									<% if current_user.role_id == 1 || current_user.role_id == 2 %>
 										<div class="panel panel-default">
-											<div class="panel-heading" role="tab" id="headingOne">
+											<div class="panel-heading" role="tab" id="headingOne-Task">
 												<h4 class="panel-title">
-													<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+													<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne-task" aria-expanded="false" aria-controls="collapseOne">
 														Asignaciones
 													</a>
 												</h4>
 											</div>
-											<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+											<div id="collapseOne-task" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 												<div class="panel-body" style="height:350px;overflow:scroll;">
 													<table class="table table-striped custab">
 														<thead>
@@ -278,14 +278,14 @@
 										</div>
 									<% end %>
 									<div class="panel panel-default">
-										<div class="panel-heading" role="tab" id="headingTwo">
+										<div class="panel-heading" role="tab" id="headingTwo-task">
 											<h4 class="panel-title">
-												<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+												<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo-task" aria-expanded="false" aria-controls="collapseTwo">
 													Colores favoritos
 												</a>
 											</h4>
 										</div>
-										<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+										<div id="collapseTwo-task" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 											<div class="panel-body">
 												Seleccione una combinacion de colores.
 												<hr>
