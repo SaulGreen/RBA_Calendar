@@ -466,6 +466,11 @@
 
           if(daysLessThanOne > 0){
               currentMonth = currentMonth - 1;
+              if(currentMonth < 1){
+                  currentMonth = 12;
+                  prevWkYear--;
+              }
+
               daysThisMonth = daysPerMonth[currentMonth];
 
               nextCrrMonth = currentMonth;
