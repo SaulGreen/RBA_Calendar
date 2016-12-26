@@ -560,6 +560,8 @@
 
       function WeeklyAppointments(month,year,wkSwtch){
 
+
+
           $(".tblMainDays").empty();
           totalFeb = FebruaryDays(year);
           daysPerMonth[2] = totalFeb;
@@ -583,7 +585,7 @@
           else
               newMonth = false;
 
-          
+          wkSwtch = false;
 
           if(newMonth == true && wkSwtch == true){
               $(".monthBefore").text(monthNames[month - 1]);
@@ -770,6 +772,11 @@
           var date = new Date();
           var currentDay = date.getDate();
           var weekDay = date.getDay();
+
+          //var currentDay = prompt("Ingrese el dia deseado:");
+          //var weekDay = prompt("Ingrese que dia de la semana es:")
+
+
           
           if(weekDay != 0)
               weekDay = weekDay - 1;
