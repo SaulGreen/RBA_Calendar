@@ -29,7 +29,8 @@ class LogController < ApplicationController
 		date1 = params[:date1]
 		date2 = params[:date2]
 
-		@action = History.joins(:user).select("nombre, apaterno, fechalog, detalles, ubicacion").all
+		# @action = History.joins(:user).select("nombre, apaterno, fechalog, detalles, ubicacion").all
+		@action = Appointment.joins("INNER JOIN clients c on c.id = appointments.client_id").where("fecha > ? AND fecha < ? AND case_type_id = 4 OR case_type_id = 28","2016-12-18","2016-12-24").select("nombreclt, apaternoclt, amaternoclt, fecha, hora, created_by_id").all
 
 		if user == "" && action == "" && date1 == "" && date2 == ""
 			respond_to do |format|
