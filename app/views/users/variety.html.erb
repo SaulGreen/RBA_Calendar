@@ -821,7 +821,7 @@
 					
 					var tr = "", cnt = 1;
 					$(resp).each(function(i,e){
-						tr += "<tr><td scope='row'>" + cnt + "</td><td>" + moment(e.fecha).format("DD/MM/YYYY") + "</td><td>" + e.nombreclt + " " + e.apaternoclt + "</td><td>" + e.case_type_id + "</td><td>" + moment(e.hora).format("hh:mm a") + "</td></tr>";
+						tr += "<tr><td scope='row'>" + cnt + "</td><td>" + moment(e.fecha).format("DD/MM/YYYY") + "</td><td>" + e.nombreclt + " " + e.apaternoclt + "</td><td>" + e.comentario + "</td><td>" + moment(e.hora).format("hh:mm a") + "</td></tr>";
 						// tr += "<tr><td scope='row'>" + cnt + "</td><td>" + moment(e.fechalog).format("DD/MM/YYYY HH:mm a") + "</td><td>" + e.nombre + " " + e.apaterno + "</td><td>" + e.detalles + "</td><td>" + e.ubicacion + "</td></tr>";
 						cnt++;
 					});
